@@ -24,7 +24,11 @@ type CorsConfig struct {
 }
 
 func Load() (*Config, error) {
-	data, err := os.ReadFile("config/development.yaml")
+	path := os.Getenv("TEMPIEX_CONFIG")
+	if path == "" {
+		path = "config/development.yaml"
+	}
+	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}

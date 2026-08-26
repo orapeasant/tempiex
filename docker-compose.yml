@@ -1,0 +1,66 @@
+services:
+
+  # ── PostgreSQL ─────────────────────────────────────────────────────────────
+  #
+  # Data is stored in the named volume `postgres_data`.
+  # This volume persists across `docker compose down` and container removal.
+  # To also remove the data: docker compose down -v
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: tempiex
+      POSTGRES_PASSWORD: tempiex
+      POSTGRES_DB: tempiex
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./tempiex/schema/postgresql/v1.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tempiex -d tempiex"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # ── Tempiex core engine ────────────────────────────────────────────────────
+  tempiex:
+    build:
+      context: .
+      dockerfile: tempiex/Dockerfile
+    restart: unless-stopped
+    environment:
+      TEMPIEX_CONFIG: /etc/tempiex/docker.yaml
+    ports:
+      - "8133:8133"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z localhost 8133 || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  # ── UI server (HTTP gateway + embedded web UI) ─────────────────────────────
+  server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    restart: unless-stopped
+    environment:
+      TEMPIEX_CONFIG: /etc/tempiex-server/docker.yaml
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      tempiex:
+        condition: service_healthy
+
+# Named volume — survives container removal.
+# Managed by Docker; lives at /var/lib/docker/volumes/tempiex_postgres_data/
+volumes:
+  postgres_data:
+    driver: local

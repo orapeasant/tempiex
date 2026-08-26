@@ -1,0 +1,18 @@
+# docker-compose.override.yml — local dev additions on top of docker-compose.yml
+# Automatically merged when running: docker compose up
+services:
+
+  # Python SDK sample worker — opt-in: docker compose --profile sdk up
+  sdk-worker:
+    profiles: [sdk]
+    build:
+      context: .
+      dockerfile: sdk-python/Dockerfile
+    restart: unless-stopped
+    environment:
+      TEMPIEX_ADDRESS: tempiex:8133
+      TEMPIEX_NAMESPACE: default
+    depends_on:
+      tempiex:
+        condition: service_healthy
+    command: ["python", "samples/order_workflow.py"]

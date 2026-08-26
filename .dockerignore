@@ -1,0 +1,22 @@
+# Ignore build artifacts and dev files
+**/.git
+**/__pycache__
+**/*.pyc
+**/.pytest_cache
+**/.venv
+**/node_modules
+**/dist
+**/.pnpm-store
+
+# Go build outputs
+tempiex/bin/
+server/bin/
+cli/dist/
+pi/bin/
+
+# Docs and specs
+docs/ref/
+
+# Session/editor files
+**/.DS_Store
+**/*.swp

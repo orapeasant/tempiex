@@ -1,0 +1,9 @@
+syntax = "proto3";
+package tempiex.api.failure.v1;
+option go_package = "github.com/tempiex/tempiex/api/gen/tempiex/api/failure/v1;failurev1";
+
+message Failure {
+  string message = 1;
+  string type = 2;
+  string stack_trace = 3;
+}

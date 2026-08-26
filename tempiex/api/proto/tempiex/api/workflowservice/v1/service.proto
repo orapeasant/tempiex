@@ -1,0 +1,238 @@
+syntax = "proto3";
+package tempiex.api.workflowservice.v1;
+option go_package = "github.com/tempiex/tempiex/api/gen/tempiex/api/workflowservice/v1;workflowservicev1";
+
+import "tempiex/api/common/v1/message.proto";
+import "tempiex/api/history/v1/message.proto";
+import "tempiex/api/enums/v1/workflow.proto";
+import "tempiex/api/failure/v1/message.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+
+service WorkflowService {
+  rpc RegisterNamespace(RegisterNamespaceRequest) returns (RegisterNamespaceResponse);
+  rpc DescribeNamespace(DescribeNamespaceRequest) returns (DescribeNamespaceResponse);
+  rpc StartWorkflowExecution(StartWorkflowExecutionRequest) returns (StartWorkflowExecutionResponse);
+  rpc DescribeWorkflowExecution(DescribeWorkflowExecutionRequest) returns (DescribeWorkflowExecutionResponse);
+  rpc GetWorkflowExecutionHistory(GetWorkflowExecutionHistoryRequest) returns (GetWorkflowExecutionHistoryResponse);
+  rpc PollWorkflowTaskQueue(PollWorkflowTaskQueueRequest) returns (PollWorkflowTaskQueueResponse);
+  rpc RespondWorkflowTaskCompleted(RespondWorkflowTaskCompletedRequest) returns (RespondWorkflowTaskCompletedResponse);
+  rpc PollActivityTaskQueue(PollActivityTaskQueueRequest) returns (PollActivityTaskQueueResponse);
+  rpc RespondActivityTaskCompleted(RespondActivityTaskCompletedRequest) returns (RespondActivityTaskCompletedResponse);
+  rpc RespondActivityTaskFailed(RespondActivityTaskFailedRequest) returns (RespondActivityTaskFailedResponse);
+  rpc RecordActivityTaskHeartbeat(RecordActivityTaskHeartbeatRequest) returns (RecordActivityTaskHeartbeatResponse);
+  rpc SignalWorkflowExecution(SignalWorkflowExecutionRequest) returns (SignalWorkflowExecutionResponse);
+  rpc RequestCancelWorkflowExecution(RequestCancelWorkflowExecutionRequest) returns (RequestCancelWorkflowExecutionResponse);
+  rpc TerminateWorkflowExecution(TerminateWorkflowExecutionRequest) returns (TerminateWorkflowExecutionResponse);
+  rpc QueryWorkflow(QueryWorkflowRequest) returns (QueryWorkflowResponse);
+  rpc CountWorkflowExecutions(CountWorkflowExecutionsRequest) returns (CountWorkflowExecutionsResponse);
+  rpc ListWorkflowExecutions(ListWorkflowExecutionsRequest) returns (ListWorkflowExecutionsResponse);
+}
+
+// Namespace
+message RegisterNamespaceRequest {
+  string name = 1;
+  string description = 2;
+  int32 retention_days = 3;
+}
+message RegisterNamespaceResponse {}
+
+message DescribeNamespaceRequest {
+  string name = 1;
+}
+message DescribeNamespaceResponse {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  int32 retention_days = 4;
+}
+
+// StartWorkflowExecution
+message StartWorkflowExecutionRequest {
+  string namespace = 1;
+  string workflow_id = 2;
+  tempiex.api.common.v1.WorkflowType workflow_type = 3;
+  string task_queue = 4;
+  tempiex.api.common.v1.Payloads input = 5;
+  google.protobuf.Duration workflow_execution_timeout = 6;
+  google.protobuf.Duration workflow_run_timeout = 7;
+  google.protobuf.Duration workflow_task_timeout = 8;
+  string request_id = 9;
+}
+message StartWorkflowExecutionResponse {
+  string run_id = 1;
+}
+
+// DescribeWorkflowExecution
+message DescribeWorkflowExecutionRequest {
+  string namespace = 1;
+  tempiex.api.common.v1.WorkflowExecution execution = 2;
+}
+message DescribeWorkflowExecutionResponse {
+  tempiex.api.common.v1.WorkflowExecution execution = 1;
+  tempiex.api.enums.v1.WorkflowExecutionStatus status = 2;
+  tempiex.api.common.v1.WorkflowType workflow_type = 3;
+  google.protobuf.Timestamp start_time = 4;
+  google.protobuf.Timestamp close_time = 5;
+  string task_queue = 6;
+}
+
+// GetWorkflowExecutionHistory
+message GetWorkflowExecutionHistoryRequest {
+  string namespace = 1;
+  tempiex.api.common.v1.WorkflowExecution execution = 2;
+}
+message GetWorkflowExecutionHistoryResponse {
+  tempiex.api.history.v1.History history = 1;
+}
+
+// PollWorkflowTaskQueue
+message PollWorkflowTaskQueueRequest {
+  string namespace = 1;
+  string task_queue = 2;
+}
+message PollWorkflowTaskQueueResponse {
+  bytes task_token = 1;
+  tempiex.api.common.v1.WorkflowExecution workflow_execution = 2;
+  tempiex.api.common.v1.WorkflowType workflow_type = 3;
+  int64 started_event_id = 4;
+  int64 previous_started_event_id = 5;
+  tempiex.api.history.v1.History history = 6;
+}
+
+// Commands
+message Command {
+  tempiex.api.enums.v1.CommandType command_type = 1;
+  oneof attributes {
+    ScheduleActivityTaskCommandAttributes schedule_activity_task_command_attributes = 10;
+    CompleteWorkflowExecutionCommandAttributes complete_workflow_execution_command_attributes = 11;
+    FailWorkflowExecutionCommandAttributes fail_workflow_execution_command_attributes = 12;
+  }
+}
+
+message ScheduleActivityTaskCommandAttributes {
+  string activity_id = 1;
+  tempiex.api.common.v1.ActivityType activity_type = 2;
+  string task_queue = 3;
+  tempiex.api.common.v1.Payloads input = 4;
+  google.protobuf.Duration start_to_close_timeout = 5;
+}
+
+message CompleteWorkflowExecutionCommandAttributes {
+  tempiex.api.common.v1.Payloads result = 1;
+}
+
+message FailWorkflowExecutionCommandAttributes {
+  tempiex.api.failure.v1.Failure failure = 1;
+}
+
+// RespondWorkflowTaskCompleted
+message RespondWorkflowTaskCompletedRequest {
+  bytes task_token = 1;
+  repeated Command commands = 2;
+}
+message RespondWorkflowTaskCompletedResponse {}
+
+// PollActivityTaskQueue
+message PollActivityTaskQueueRequest {
+  string namespace = 1;
+  string task_queue = 2;
+}
+message PollActivityTaskQueueResponse {
+  bytes task_token = 1;
+  tempiex.api.common.v1.WorkflowExecution workflow_execution = 2;
+  tempiex.api.common.v1.ActivityType activity_type = 3;
+  string activity_id = 4;
+  tempiex.api.common.v1.Payloads input = 5;
+  int64 scheduled_event_id = 6;
+  int64 started_event_id = 7;
+  google.protobuf.Duration start_to_close_timeout = 8;
+  tempiex.api.common.v1.Payloads heartbeat_details = 9;
+}
+
+// RespondActivityTaskCompleted
+message RespondActivityTaskCompletedRequest {
+  bytes task_token = 1;
+  tempiex.api.common.v1.Payloads result = 2;
+}
+message RespondActivityTaskCompletedResponse {}
+
+// RespondActivityTaskFailed
+message RespondActivityTaskFailedRequest {
+  bytes task_token = 1;
+  tempiex.api.failure.v1.Failure failure = 2;
+}
+message RespondActivityTaskFailedResponse {}
+
+// RecordActivityTaskHeartbeat
+message RecordActivityTaskHeartbeatRequest {
+  bytes task_token = 1;
+  tempiex.api.common.v1.Payloads details = 2;
+}
+message RecordActivityTaskHeartbeatResponse {
+  bool cancel_requested = 1;
+}
+
+// SignalWorkflowExecution
+message SignalWorkflowExecutionRequest {
+  string namespace = 1;
+  tempiex.api.common.v1.WorkflowExecution workflow_execution = 2;
+  string signal_name = 3;
+  tempiex.api.common.v1.Payloads input = 4;
+  string request_id = 5;
+}
+message SignalWorkflowExecutionResponse {}
+
+// RequestCancelWorkflowExecution
+message RequestCancelWorkflowExecutionRequest {
+  string namespace = 1;
+  tempiex.api.common.v1.WorkflowExecution workflow_execution = 2;
+  string reason = 3;
+  string request_id = 4;
+}
+message RequestCancelWorkflowExecutionResponse {}
+
+// TerminateWorkflowExecution
+message TerminateWorkflowExecutionRequest {
+  string namespace = 1;
+  tempiex.api.common.v1.WorkflowExecution workflow_execution = 2;
+  string reason = 3;
+  string identity = 4;
+}
+message TerminateWorkflowExecutionResponse {}
+
+// QueryWorkflow
+message WorkflowQuery {
+  string query_type = 1;
+  tempiex.api.common.v1.Payloads query_args = 2;
+}
+message QueryWorkflowRequest {
+  string namespace = 1;
+  tempiex.api.common.v1.WorkflowExecution execution = 2;
+  WorkflowQuery query = 3;
+}
+message QueryWorkflowResponse {
+  tempiex.api.common.v1.Payloads query_result = 1;
+  string error_message = 2;
+}
+
+// CountWorkflowExecutions
+message CountWorkflowExecutionsRequest {
+  string namespace = 1;
+  string query = 2;
+}
+message CountWorkflowExecutionsResponse {
+  int64 count = 1;
+}
+
+// ListWorkflowExecutions
+message ListWorkflowExecutionsRequest {
+  string namespace = 1;
+  int32 page_size = 2;
+  bytes next_page_token = 3;
+  string query = 4;
+}
+message ListWorkflowExecutionsResponse {
+  repeated tempiex.api.common.v1.WorkflowExecutionInfo executions = 1;
+  bytes next_page_token = 2;
+}

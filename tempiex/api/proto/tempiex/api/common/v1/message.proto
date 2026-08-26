@@ -1,0 +1,42 @@
+syntax = "proto3";
+package tempiex.api.common.v1;
+option go_package = "github.com/tempiex/tempiex/api/gen/tempiex/api/common/v1;commonv1";
+
+import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
+import "tempiex/api/enums/v1/workflow.proto";
+
+message Payload {
+  string encoding = 1;
+  bytes data = 2;
+}
+
+message Payloads {
+  repeated Payload payloads = 1;
+}
+
+message WorkflowExecution {
+  string workflow_id = 1;
+  string run_id = 2;
+}
+
+message WorkflowType {
+  string name = 1;
+}
+
+message ActivityType {
+  string name = 1;
+}
+
+message Header {
+  map<string, bytes> fields = 1;
+}
+
+message WorkflowExecutionInfo {
+  WorkflowExecution execution = 1;
+  WorkflowType type = 2;
+  google.protobuf.Timestamp start_time = 3;
+  google.protobuf.Timestamp close_time = 4;
+  tempiex.api.enums.v1.WorkflowExecutionStatus status = 5;
+  string task_queue = 6;
+}

@@ -1,0 +1,9 @@
+server:
+  grpcPort: 8133
+database:
+  host: localhost
+  port: 5432
+  user: tempiex
+  password: tempiex
+  dbName: tempiex
+  sslMode: disable

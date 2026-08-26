@@ -1,0 +1,46 @@
+[Fx] PROVIDE	fx.Lifecycle <= go.uber.org/fx.New.func1()
+[Fx] PROVIDE	fx.Shutdowner <= go.uber.org/fx.(*App).shutdowner-fm()
+[Fx] PROVIDE	fx.DotGraph <= go.uber.org/fx.(*App).dotGraph-fm()
+[Fx] PROVIDE	*config.Config <= github.com/tempiex/server/internal/config.Load()
+[Fx] PROVIDE	*pgxpool.Pool <= main.newDBPool()
+[Fx] PROVIDE	workflowservicev1.WorkflowServiceClient <= github.com/tempiex/server/internal/rpc.NewWorkflowServiceClient()
+[Fx] PROVIDE	*echo.Echo <= github.com/tempiex/server/internal/server.New()
+[Fx] INVOKE		main.startServer()
+[Fx] BEFORE RUN	provide: go.uber.org/fx.New.func1()
+[Fx] RUN	provide: go.uber.org/fx.New.func1() in 4.646µs
+[Fx] BEFORE RUN	provide: github.com/tempiex/server/internal/config.Load()
+[Fx] RUN	provide: github.com/tempiex/server/internal/config.Load() in 50.08µs
+[Fx] BEFORE RUN	provide: main.newDBPool()
+{"level":"info","time":"2026-08-25T07:35:34-04:00","message":"connected to database"}
+[Fx] RUN	provide: main.newDBPool() in 140.839µs
+[Fx] BEFORE RUN	provide: github.com/tempiex/server/internal/server.New()
+[Fx] RUN	provide: github.com/tempiex/server/internal/server.New() in 56.164µs
+[Fx] BEFORE RUN	provide: github.com/tempiex/server/internal/rpc.NewWorkflowServiceClient()
+{"level":"info","addr":"localhost:8133","time":"2026-08-25T07:35:34-04:00","message":"connected to tempiex gRPC"}
+[Fx] RUN	provide: github.com/tempiex/server/internal/rpc.NewWorkflowServiceClient() in 52.931µs
+[Fx] HOOK OnStart		main.startServer.func1() executing (caller: main.startServer)
+[Fx] HOOK OnStart		main.startServer.func1() called by main.startServer ran successfully in 259ns
+[Fx] RUNNING
+⇨ http server started on [::]:8080
+{"time":"2026-08-25T07:35:36.547640688-04:00","id":"","remote_ip":"::1","host":"localhost:8080","method":"GET","uri":"/health","user_agent":"curl/8.14.1","status":200,"error":"","latency":12930,"latency_human":"12.93µs","bytes_in":0,"bytes_out":34}
+{"time":"2026-08-25T07:35:43.371886317-04:00","id":"","remote_ip":"::1","host":"localhost:8080","method":"GET","uri":"/health","user_agent":"curl/8.14.1","status":200,"error":"","latency":33094,"latency_human":"33.094µs","bytes_in":0,"bytes_out":34}
+{"time":"2026-08-25T07:35:43.375661678-04:00","id":"","remote_ip":"::1","host":"localhost:8080","method":"GET","uri":"/api/v1/settings","user_agent":"curl/8.14.1","status":200,"error":"","latency":27375,"latency_human":"27.375µs","bytes_in":0,"bytes_out":69}
+{"time":"2026-08-25T07:35:43.379413793-04:00","id":"","remote_ip":"::1","host":"localhost:8080","method":"GET","uri":"/api/v1/cluster","user_agent":"curl/8.14.1","status":200,"error":"","latency":31690,"latency_human":"31.69µs","bytes_in":0,"bytes_out":140}
+{"time":"2026-08-25T07:35:43.389175694-04:00","id":"","remote_ip":"::1","host":"localhost:8080","method":"GET","uri":"/api/v1/namespaces","user_agent":"curl/8.14.1","status":200,"error":"","latency":5957535,"latency_human":"5.957535ms","bytes_in":0,"bytes_out":3762}
+{"time":"2026-08-25T07:35:43.39446395-04:00","id":"","remote_ip":"::1","host":"localhost:8080","method":"GET","uri":"/api/v1/namespaces/test-pi-16be92e8/workflows","user_agent":"curl/8.14.1","status":200,"error":"","latency":1206694,"latency_human":"1.206694ms","bytes_in":0,"bytes_out":292}
+{"time":"2026-08-25T07:35:43.39862201-04:00","id":"","remote_ip":"::1","host":"localhost:8080","method":"GET","uri":"/","user_agent":"curl/8.14.1","status":200,"error":"","latency":38087,"latency_human":"38.087µs","bytes_in":0,"bytes_out":457}
+{"time":"2026-08-25T07:35:43.402359257-04:00","id":"","remote_ip":"::1","host":"localhost:8080","method":"GET","uri":"/namespaces/default/workflows","user_agent":"curl/8.14.1","status":200,"error":"","latency":18913,"latency_human":"18.913µs","bytes_in":0,"bytes_out":457}
+{"time":"2026-08-25T07:35:46.635048396-04:00","id":"","remote_ip":"::1","host":"localhost:8080","method":"GET","uri":"/ready","user_agent":"curl/8.14.1","status":200,"error":"","latency":362866,"latency_human":"362.866µs","bytes_in":0,"bytes_out":16}
+{"time":"2026-08-25T07:36:04.473538103-04:00","id":"","remote_ip":"::1","host":"localhost:8080","method":"GET","uri":"/health","user_agent":"curl/8.14.1","status":200,"error":"","latency":20123,"latency_human":"20.123µs","bytes_in":0,"bytes_out":34}
+{"time":"2026-08-25T07:36:04.477436046-04:00","id":"","remote_ip":"::1","host":"localhost:8080","method":"GET","uri":"/ready","user_agent":"curl/8.14.1","status":200,"error":"","latency":293430,"latency_human":"293.43µs","bytes_in":0,"bytes_out":16}
+{"time":"2026-08-25T07:36:04.480876804-04:00","id":"","remote_ip":"::1","host":"localhost:8080","method":"GET","uri":"/api/v1/settings","user_agent":"curl/8.14.1","status":200,"error":"","latency":24309,"latency_human":"24.309µs","bytes_in":0,"bytes_out":69}
+{"time":"2026-08-25T07:36:04.497256133-04:00","id":"","remote_ip":"::1","host":"localhost:8080","method":"GET","uri":"/api/v1/cluster","user_agent":"curl/8.14.1","status":200,"error":"","latency":22943,"latency_human":"22.943µs","bytes_in":0,"bytes_out":140}
+{"time":"2026-08-25T07:36:04.513161015-04:00","id":"","remote_ip":"::1","host":"localhost:8080","method":"GET","uri":"/api/v1/namespaces","user_agent":"curl/8.14.1","status":200,"error":"","latency":310033,"latency_human":"310.033µs","bytes_in":0,"bytes_out":3762}
+{"time":"2026-08-25T07:36:10.241596981-04:00","id":"","remote_ip":"::1","host":"localhost:8080","method":"GET","uri":"/api/v1/namespaces","user_agent":"curl/8.14.1","status":200,"error":"","latency":531960,"latency_human":"531.96µs","bytes_in":0,"bytes_out":3762}
+{"time":"2026-08-25T07:36:10.255115329-04:00","id":"","remote_ip":"::1","host":"localhost:8080","method":"GET","uri":"/api/v1/namespaces/act-test-50dfa697/workflows","user_agent":"curl/8.14.1","status":200,"error":"","latency":468269,"latency_human":"468.269µs","bytes_in":0,"bytes_out":268}
+{"time":"2026-08-25T07:36:15.518325054-04:00","id":"","remote_ip":"::1","host":"localhost:8080","method":"GET","uri":"/api/v1/namespaces/act-test-50dfa697/workflows/wf1/13afffa1-7560-42f7-b224-e1b5c4130586","user_agent":"curl/8.14.1","status":200,"error":"","latency":638280,"latency_human":"638.28µs","bytes_in":0,"bytes_out":240}
+{"time":"2026-08-25T07:36:15.536815893-04:00","id":"","remote_ip":"::1","host":"localhost:8080","method":"GET","uri":"/api/v1/namespaces/act-test-50dfa697/workflows/wf1/13afffa1-7560-42f7-b224-e1b5c4130586/history","user_agent":"curl/8.14.1","status":200,"error":"","latency":823242,"latency_human":"823.242µs","bytes_in":0,"bytes_out":888}
+[Fx] TERMINATED
+[Fx] HOOK OnStop		main.startServer.func2() executing (caller: main.startServer)
+{"level":"error","error":"http: Server closed","time":"2026-08-25T07:37:44-04:00","message":"server stopped"}
+[Fx] HOOK OnStop		main.startServer.func2() called by main.startServer ran successfully in 81.443µs

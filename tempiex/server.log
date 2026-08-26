@@ -1,0 +1,34 @@
+[Fx] PROVIDE	fx.Lifecycle <= go.uber.org/fx.New.func1()
+[Fx] PROVIDE	fx.Shutdowner <= go.uber.org/fx.(*App).shutdowner-fm()
+[Fx] PROVIDE	fx.DotGraph <= go.uber.org/fx.(*App).dotGraph-fm()
+[Fx] PROVIDE	*config.Config <= main.loadConfig()
+[Fx] PROVIDE	persistence.Store <= main.newStore()
+[Fx] PROVIDE	*matching.Engine <= main.newMatchingEngine()
+[Fx] PROVIDE	*history.Engine <= main.newHistoryEngine()
+[Fx] PROVIDE	*frontend.Handler <= main.newHandler()
+[Fx] PROVIDE	*grpc.Server <= main.newGRPCServer()
+[Fx] INVOKE		main.startServer()
+[Fx] BEFORE RUN	provide: main.loadConfig()
+[Fx] RUN	provide: main.loadConfig() in 89.664µs
+[Fx] BEFORE RUN	provide: go.uber.org/fx.New.func1()
+[Fx] RUN	provide: go.uber.org/fx.New.func1() in 1.593µs
+[Fx] BEFORE RUN	provide: main.newStore()
+[Fx] RUN	provide: main.newStore() in 169.026µs
+[Fx] BEFORE RUN	provide: main.newMatchingEngine()
+[Fx] RUN	provide: main.newMatchingEngine() in 2.078µs
+[Fx] BEFORE RUN	provide: main.newHistoryEngine()
+[Fx] RUN	provide: main.newHistoryEngine() in 9.589µs
+[Fx] BEFORE RUN	provide: main.newHandler()
+[Fx] RUN	provide: main.newHandler() in 2.826µs
+[Fx] BEFORE RUN	provide: main.newGRPCServer()
+[Fx] RUN	provide: main.newGRPCServer() in 21.96µs
+[Fx] HOOK OnStart		main.newStore.func1() executing (caller: main.newStore)
+[90m2:28AM[0m [32mINF[0m [1minitializing database schema[0m
+[Fx] HOOK OnStart		main.newStore.func1() called by main.newStore ran successfully in 16.540555ms
+[Fx] HOOK OnStart		main.startServer.func1() executing (caller: main.startServer)
+[Fx] HOOK OnStart		main.startServer.func1() called by main.startServer ran successfully in 10.59209ms
+[Fx] RUNNING
+[90m2:28AM[0m [32mINF[0m [1mgRPC server listening[0m [36maddr=[0m:8133
+[Fx] TERMINATED
+[Fx] HOOK OnStop		main.startServer.func2() executing (caller: main.startServer)
+[Fx] HOOK OnStop		main.startServer.func2() called by main.startServer ran successfully in 42.083µs

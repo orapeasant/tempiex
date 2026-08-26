@@ -1,0 +1,106 @@
+syntax = "proto3";
+package tempiex.api.history.v1;
+option go_package = "github.com/tempiex/tempiex/api/gen/tempiex/api/history/v1;historyv1";
+
+import "tempiex/api/enums/v1/workflow.proto";
+import "tempiex/api/common/v1/message.proto";
+import "tempiex/api/failure/v1/message.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+
+message HistoryEvent {
+  int64 event_id = 1;
+  google.protobuf.Timestamp event_time = 2;
+  tempiex.api.enums.v1.EventType event_type = 3;
+
+  oneof attributes {
+    WorkflowExecutionStartedEventAttributes workflow_execution_started_event_attributes = 10;
+    WorkflowTaskScheduledEventAttributes workflow_task_scheduled_event_attributes = 11;
+    WorkflowTaskStartedEventAttributes workflow_task_started_event_attributes = 12;
+    WorkflowTaskCompletedEventAttributes workflow_task_completed_event_attributes = 13;
+    ActivityTaskScheduledEventAttributes activity_task_scheduled_event_attributes = 14;
+    ActivityTaskStartedEventAttributes activity_task_started_event_attributes = 15;
+    ActivityTaskCompletedEventAttributes activity_task_completed_event_attributes = 16;
+    ActivityTaskFailedEventAttributes activity_task_failed_event_attributes = 17;
+    WorkflowExecutionCompletedEventAttributes workflow_execution_completed_event_attributes = 18;
+    WorkflowExecutionFailedEventAttributes workflow_execution_failed_event_attributes = 19;
+    WorkflowExecutionSignaledEventAttributes workflow_execution_signaled_event_attributes = 20;
+    WorkflowExecutionCancelRequestedEventAttributes workflow_execution_cancel_requested_event_attributes = 21;
+    WorkflowExecutionTerminatedEventAttributes workflow_execution_terminated_event_attributes = 22;
+  }
+}
+
+message History {
+  repeated HistoryEvent events = 1;
+}
+
+message WorkflowExecutionStartedEventAttributes {
+  tempiex.api.common.v1.WorkflowType workflow_type = 1;
+  string task_queue = 2;
+  tempiex.api.common.v1.Payloads input = 3;
+  string workflow_id = 4;
+}
+
+message WorkflowTaskScheduledEventAttributes {
+  string task_queue = 1;
+}
+
+message WorkflowTaskStartedEventAttributes {
+  int64 scheduled_event_id = 1;
+}
+
+message WorkflowTaskCompletedEventAttributes {
+  int64 scheduled_event_id = 1;
+  int64 started_event_id = 2;
+}
+
+message ActivityTaskScheduledEventAttributes {
+  string activity_id = 1;
+  tempiex.api.common.v1.ActivityType activity_type = 2;
+  string task_queue = 3;
+  tempiex.api.common.v1.Payloads input = 4;
+  google.protobuf.Duration start_to_close_timeout = 5;
+  int64 workflow_task_completed_event_id = 6;
+}
+
+message ActivityTaskStartedEventAttributes {
+  int64 scheduled_event_id = 1;
+}
+
+message ActivityTaskCompletedEventAttributes {
+  int64 scheduled_event_id = 1;
+  int64 started_event_id = 2;
+  tempiex.api.common.v1.Payloads result = 3;
+}
+
+message ActivityTaskFailedEventAttributes {
+  int64 scheduled_event_id = 1;
+  int64 started_event_id = 2;
+  tempiex.api.failure.v1.Failure failure = 3;
+}
+
+message WorkflowExecutionCompletedEventAttributes {
+  tempiex.api.common.v1.Payloads result = 1;
+  int64 workflow_task_completed_event_id = 2;
+}
+
+message WorkflowExecutionFailedEventAttributes {
+  tempiex.api.failure.v1.Failure failure = 1;
+  int64 workflow_task_completed_event_id = 2;
+}
+
+message WorkflowExecutionSignaledEventAttributes {
+  string signal_name = 1;
+  tempiex.api.common.v1.Payloads input = 2;
+  string identity = 3;
+}
+
+message WorkflowExecutionCancelRequestedEventAttributes {
+  string cause = 1;
+  string identity = 2;
+}
+
+message WorkflowExecutionTerminatedEventAttributes {
+  string reason = 1;
+  string identity = 2;
+}

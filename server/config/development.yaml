@@ -1,0 +1,8 @@
+tempiexGrpcAddress: "localhost:8133"
+host: "0.0.0.0"
+port: 8080
+dbDsn: "postgres://tempiex:tempiex@localhost:5432/tempiex"
+auth:
+  enabled: false
+cors:
+  cookieInsecure: true

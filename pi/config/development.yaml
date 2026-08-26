@@ -1,0 +1,25 @@
+tempiex:
+  address: "localhost:8133"
+  namespace: "default"
+  tls:
+    enabled: false
+  apiKey: ""
+workers:
+  - taskQueue: "pi-default"
+    maxConcurrentActivities: 10
+    maxConcurrentWorkflowTasks: 5
+api:
+  host: "0.0.0.0"
+  port: 8090
+  corsOrigins:
+    - "http://localhost:8080"
+session:
+  storePath: "./pi-sessions.db"
+  maxCompletedSessions: 1000
+metrics:
+  otel:
+    endpoint: "localhost:4317"
+    insecure: true
+log:
+  level: "info"
+  format: "json"

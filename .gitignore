@@ -34,3 +34,6 @@ go.work.sum
 #documents
 *.md
 !README.md
+
+#zip files
+*.zip

@@ -1,0 +1,107 @@
+syntax = "proto3";
+package tempiex.api.schedule.v1;
+option go_package = "github.com/tempiex/tempiex/api/gen/tempiex/api/schedule/v1;schedulev1";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+import "tempiex/api/common/v1/message.proto";
+import "tempiex/api/enums/v1/schedule.proto";
+
+// ScheduleIntervalSpec fires every `interval`, offset by `phase` from the
+// epoch. Used for simple fixed-cadence schedules ("every 5 minutes") where a
+// cron expression would be overkill.
+message ScheduleIntervalSpec {
+  google.protobuf.Duration interval = 1;
+  google.protobuf.Duration phase = 2;
+}
+
+// ScheduleSpec is the union of ways a schedule's fire times can be defined.
+// cron_expressions and interval are both evaluated and merged (a schedule may
+// mix cron entries with fixed intervals); start_time/end_time bound the
+// window during which either source produces fire times.
+message ScheduleSpec {
+  repeated string cron_expressions = 1;
+  repeated ScheduleIntervalSpec interval = 2;
+  google.protobuf.Timestamp start_time = 3;
+  google.protobuf.Timestamp end_time = 4;
+  // Random jitter applied to each computed fire time, to avoid thundering
+  // herds when many schedules share the same cadence.
+  google.protobuf.Duration jitter = 5;
+}
+
+// ScheduleActionStartWorkflow is the only supported schedule action for now:
+// start a new workflow execution using the given parameters. Modeled as its
+// own message (rather than reusing StartWorkflowExecutionRequest) because a
+// scheduled start has no namespace/request_id of its own — those are filled
+// in by the schedule worker at fire time.
+message ScheduleActionStartWorkflow {
+  string workflow_id = 1;
+  tempiex.api.common.v1.WorkflowType workflow_type = 2;
+  string task_queue = 3;
+  tempiex.api.common.v1.Payloads input = 4;
+  google.protobuf.Duration workflow_execution_timeout = 5;
+  google.protobuf.Duration workflow_run_timeout = 6;
+  google.protobuf.Duration workflow_task_timeout = 7;
+}
+
+message ScheduleAction {
+  oneof action {
+    ScheduleActionStartWorkflow start_workflow = 1;
+  }
+}
+
+// SchedulePolicies governs how the schedule worker resolves conflicts
+// between overlapping runs and how it reacts to a run's failure.
+message SchedulePolicies {
+  tempiex.api.enums.v1.ScheduleOverlapPolicy overlap_policy = 1;
+  // A missed fire time older than catchup_window is skipped instead of
+  // being executed late (e.g. after the server was down).
+  google.protobuf.Duration catchup_window = 2;
+  bool pause_on_failure = 3;
+}
+
+// ScheduleState is the mutable, user-controllable part of a schedule
+// (as opposed to ScheduleSpec/ScheduleAction which define *what* runs and
+// *when*). Kept separate so pause/unpause/notes updates don't need to
+// resend the full schedule definition.
+message ScheduleState {
+  bool paused = 1;
+  string notes = 2;
+  // If limited_actions is true, remaining_actions decrements on each fire
+  // and the schedule auto-pauses at zero.
+  bool limited_actions = 3;
+  int64 remaining_actions = 4;
+}
+
+message Schedule {
+  ScheduleSpec spec = 1;
+  ScheduleAction action = 2;
+  SchedulePolicies policies = 3;
+  ScheduleState state = 4;
+}
+
+// ScheduleActionResult records one historical firing, kept for
+// DescribeSchedule's "recent actions" view.
+message ScheduleActionResult {
+  google.protobuf.Timestamp schedule_time = 1;
+  google.protobuf.Timestamp actual_time = 2;
+  tempiex.api.common.v1.WorkflowExecution start_workflow_result = 3;
+}
+
+// ScheduleInfo is server-computed, read-only status about a schedule
+// (as opposed to Schedule, which is the user-authored definition).
+message ScheduleInfo {
+  int64 action_count = 1;
+  int64 missed_catchup_window_count = 2;
+  int64 overlap_skipped_count = 3;
+  repeated ScheduleActionResult recent_actions = 4;
+  repeated google.protobuf.Timestamp future_action_times = 5;
+  google.protobuf.Timestamp created_time = 6;
+  google.protobuf.Timestamp last_updated_time = 7;
+}
+
+message ScheduleListEntry {
+  string schedule_id = 1;
+  Schedule schedule = 2;
+  ScheduleInfo info = 3;
+}

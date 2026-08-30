@@ -1,0 +1,103 @@
+syntax = "proto3";
+package tempiex.api.operatorservice.v1;
+option go_package = "github.com/tempiex/tempiex/api/gen/tempiex/api/operatorservice/v1;operatorservicev1";
+
+import "tempiex/api/namespace/v1/message.proto";
+
+// OperatorService groups cluster/namespace administration RPCs that are
+// intentionally kept off WorkflowService: they are infrequent, cross-cutting
+// operations (delete a namespace, manage custom search attributes, inspect
+// cluster membership) rather than per-workflow calls, and are typically
+// gated behind a stricter RBAC role (Admin) than everyday workflow traffic.
+service OperatorService {
+  rpc ListNamespaces(ListNamespacesRequest) returns (ListNamespacesResponse);
+  rpc UpdateNamespace(UpdateNamespaceRequest) returns (UpdateNamespaceResponse);
+  rpc DeleteNamespace(DeleteNamespaceRequest) returns (DeleteNamespaceResponse);
+
+  rpc AddSearchAttributes(AddSearchAttributesRequest) returns (AddSearchAttributesResponse);
+  rpc RemoveSearchAttributes(RemoveSearchAttributesRequest) returns (RemoveSearchAttributesResponse);
+  rpc ListSearchAttributes(ListSearchAttributesRequest) returns (ListSearchAttributesResponse);
+
+  rpc ListClusterMembers(ListClusterMembersRequest) returns (ListClusterMembersResponse);
+}
+
+// ListNamespaces
+message ListNamespacesRequest {
+  int32 page_size = 1;
+  bytes next_page_token = 2;
+}
+message ListNamespacesResponse {
+  repeated tempiex.api.namespace.v1.Namespace namespaces = 1;
+  bytes next_page_token = 2;
+}
+
+// UpdateNamespace overwrites config fields (e.g. retention) on an existing
+// namespace. Identity fields (name, id) are immutable once registered.
+message UpdateNamespaceRequest {
+  string name = 1;
+  tempiex.api.namespace.v1.NamespaceConfig config = 2;
+}
+message UpdateNamespaceResponse {
+  tempiex.api.namespace.v1.Namespace namespace = 1;
+}
+
+// DeleteNamespace marks the namespace DEPRECATED immediately and schedules
+// hard deletion after its retention window elapses; it does not delete
+// workflow history synchronously.
+message DeleteNamespaceRequest {
+  string name = 1;
+}
+message DeleteNamespaceResponse {}
+
+// SearchAttributes are typed, indexed fields attached to workflow
+// executions (via Memo/Header) that ListWorkflowExecutions query strings can
+// filter and sort on. They must be registered here before use because the
+// visibility store needs to know their type to create the right index.
+enum SearchAttributeType {
+  SEARCH_ATTRIBUTE_TYPE_UNSPECIFIED = 0;
+  SEARCH_ATTRIBUTE_TYPE_TEXT = 1;
+  SEARCH_ATTRIBUTE_TYPE_KEYWORD = 2;
+  SEARCH_ATTRIBUTE_TYPE_INT = 3;
+  SEARCH_ATTRIBUTE_TYPE_DOUBLE = 4;
+  SEARCH_ATTRIBUTE_TYPE_BOOL = 5;
+  SEARCH_ATTRIBUTE_TYPE_DATETIME = 6;
+  SEARCH_ATTRIBUTE_TYPE_KEYWORD_LIST = 7;
+}
+
+message AddSearchAttributesRequest {
+  string namespace = 1;
+  map<string, SearchAttributeType> search_attributes = 2;
+}
+message AddSearchAttributesResponse {}
+
+message RemoveSearchAttributesRequest {
+  string namespace = 1;
+  repeated string search_attributes = 2;
+}
+message RemoveSearchAttributesResponse {}
+
+message ListSearchAttributesRequest {
+  string namespace = 1;
+}
+message ListSearchAttributesResponse {
+  map<string, SearchAttributeType> search_attributes = 1;
+}
+
+// ListClusterMembers surfaces the membership ring (internal/membership) so
+// operators can confirm which hosts own which service roles — primarily a
+// single-node stub today, but the shape supports multi-node without a
+// breaking change later.
+message ClusterMember {
+  string host_id = 1;
+  string address = 2;
+  repeated string roles = 3;
+  int64 shard_id = 4;
+}
+message ListClusterMembersRequest {
+  int32 page_size = 1;
+  bytes next_page_token = 2;
+}
+message ListClusterMembersResponse {
+  repeated ClusterMember members = 1;
+  bytes next_page_token = 2;
+}

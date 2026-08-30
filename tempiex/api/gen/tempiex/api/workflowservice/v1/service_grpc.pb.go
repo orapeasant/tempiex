@@ -36,6 +36,12 @@ const (
 	WorkflowService_QueryWorkflow_FullMethodName                  = "/tempiex.api.workflowservice.v1.WorkflowService/QueryWorkflow"
 	WorkflowService_CountWorkflowExecutions_FullMethodName        = "/tempiex.api.workflowservice.v1.WorkflowService/CountWorkflowExecutions"
 	WorkflowService_ListWorkflowExecutions_FullMethodName         = "/tempiex.api.workflowservice.v1.WorkflowService/ListWorkflowExecutions"
+	WorkflowService_CreateSchedule_FullMethodName                 = "/tempiex.api.workflowservice.v1.WorkflowService/CreateSchedule"
+	WorkflowService_DescribeSchedule_FullMethodName               = "/tempiex.api.workflowservice.v1.WorkflowService/DescribeSchedule"
+	WorkflowService_UpdateSchedule_FullMethodName                 = "/tempiex.api.workflowservice.v1.WorkflowService/UpdateSchedule"
+	WorkflowService_PatchSchedule_FullMethodName                  = "/tempiex.api.workflowservice.v1.WorkflowService/PatchSchedule"
+	WorkflowService_ListSchedules_FullMethodName                  = "/tempiex.api.workflowservice.v1.WorkflowService/ListSchedules"
+	WorkflowService_DeleteSchedule_FullMethodName                 = "/tempiex.api.workflowservice.v1.WorkflowService/DeleteSchedule"
 )
 
 // WorkflowServiceClient is the client API for WorkflowService service.
@@ -59,6 +65,16 @@ type WorkflowServiceClient interface {
 	QueryWorkflow(ctx context.Context, in *QueryWorkflowRequest, opts ...grpc.CallOption) (*QueryWorkflowResponse, error)
 	CountWorkflowExecutions(ctx context.Context, in *CountWorkflowExecutionsRequest, opts ...grpc.CallOption) (*CountWorkflowExecutionsResponse, error)
 	ListWorkflowExecutions(ctx context.Context, in *ListWorkflowExecutionsRequest, opts ...grpc.CallOption) (*ListWorkflowExecutionsResponse, error)
+	// Schedules: create/manage a recurring definition that the internal
+	// schedule worker (internal/worker) evaluates and fires as new workflow
+	// executions. Modeled as WorkflowService RPCs (not a separate service)
+	// since schedules operate within a single namespace like workflows do.
+	CreateSchedule(ctx context.Context, in *CreateScheduleRequest, opts ...grpc.CallOption) (*CreateScheduleResponse, error)
+	DescribeSchedule(ctx context.Context, in *DescribeScheduleRequest, opts ...grpc.CallOption) (*DescribeScheduleResponse, error)
+	UpdateSchedule(ctx context.Context, in *UpdateScheduleRequest, opts ...grpc.CallOption) (*UpdateScheduleResponse, error)
+	PatchSchedule(ctx context.Context, in *PatchScheduleRequest, opts ...grpc.CallOption) (*PatchScheduleResponse, error)
+	ListSchedules(ctx context.Context, in *ListSchedulesRequest, opts ...grpc.CallOption) (*ListSchedulesResponse, error)
+	DeleteSchedule(ctx context.Context, in *DeleteScheduleRequest, opts ...grpc.CallOption) (*DeleteScheduleResponse, error)
 }
 
 type workflowServiceClient struct {
@@ -239,6 +255,66 @@ func (c *workflowServiceClient) ListWorkflowExecutions(ctx context.Context, in *
 	return out, nil
 }
 
+func (c *workflowServiceClient) CreateSchedule(ctx context.Context, in *CreateScheduleRequest, opts ...grpc.CallOption) (*CreateScheduleResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateScheduleResponse)
+	err := c.cc.Invoke(ctx, WorkflowService_CreateSchedule_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *workflowServiceClient) DescribeSchedule(ctx context.Context, in *DescribeScheduleRequest, opts ...grpc.CallOption) (*DescribeScheduleResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DescribeScheduleResponse)
+	err := c.cc.Invoke(ctx, WorkflowService_DescribeSchedule_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *workflowServiceClient) UpdateSchedule(ctx context.Context, in *UpdateScheduleRequest, opts ...grpc.CallOption) (*UpdateScheduleResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateScheduleResponse)
+	err := c.cc.Invoke(ctx, WorkflowService_UpdateSchedule_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *workflowServiceClient) PatchSchedule(ctx context.Context, in *PatchScheduleRequest, opts ...grpc.CallOption) (*PatchScheduleResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PatchScheduleResponse)
+	err := c.cc.Invoke(ctx, WorkflowService_PatchSchedule_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *workflowServiceClient) ListSchedules(ctx context.Context, in *ListSchedulesRequest, opts ...grpc.CallOption) (*ListSchedulesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListSchedulesResponse)
+	err := c.cc.Invoke(ctx, WorkflowService_ListSchedules_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *workflowServiceClient) DeleteSchedule(ctx context.Context, in *DeleteScheduleRequest, opts ...grpc.CallOption) (*DeleteScheduleResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteScheduleResponse)
+	err := c.cc.Invoke(ctx, WorkflowService_DeleteSchedule_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WorkflowServiceServer is the server API for WorkflowService service.
 // All implementations must embed UnimplementedWorkflowServiceServer
 // for forward compatibility.
@@ -260,6 +336,16 @@ type WorkflowServiceServer interface {
 	QueryWorkflow(context.Context, *QueryWorkflowRequest) (*QueryWorkflowResponse, error)
 	CountWorkflowExecutions(context.Context, *CountWorkflowExecutionsRequest) (*CountWorkflowExecutionsResponse, error)
 	ListWorkflowExecutions(context.Context, *ListWorkflowExecutionsRequest) (*ListWorkflowExecutionsResponse, error)
+	// Schedules: create/manage a recurring definition that the internal
+	// schedule worker (internal/worker) evaluates and fires as new workflow
+	// executions. Modeled as WorkflowService RPCs (not a separate service)
+	// since schedules operate within a single namespace like workflows do.
+	CreateSchedule(context.Context, *CreateScheduleRequest) (*CreateScheduleResponse, error)
+	DescribeSchedule(context.Context, *DescribeScheduleRequest) (*DescribeScheduleResponse, error)
+	UpdateSchedule(context.Context, *UpdateScheduleRequest) (*UpdateScheduleResponse, error)
+	PatchSchedule(context.Context, *PatchScheduleRequest) (*PatchScheduleResponse, error)
+	ListSchedules(context.Context, *ListSchedulesRequest) (*ListSchedulesResponse, error)
+	DeleteSchedule(context.Context, *DeleteScheduleRequest) (*DeleteScheduleResponse, error)
 	mustEmbedUnimplementedWorkflowServiceServer()
 }
 
@@ -320,6 +406,24 @@ func (UnimplementedWorkflowServiceServer) CountWorkflowExecutions(context.Contex
 }
 func (UnimplementedWorkflowServiceServer) ListWorkflowExecutions(context.Context, *ListWorkflowExecutionsRequest) (*ListWorkflowExecutionsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListWorkflowExecutions not implemented")
+}
+func (UnimplementedWorkflowServiceServer) CreateSchedule(context.Context, *CreateScheduleRequest) (*CreateScheduleResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateSchedule not implemented")
+}
+func (UnimplementedWorkflowServiceServer) DescribeSchedule(context.Context, *DescribeScheduleRequest) (*DescribeScheduleResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DescribeSchedule not implemented")
+}
+func (UnimplementedWorkflowServiceServer) UpdateSchedule(context.Context, *UpdateScheduleRequest) (*UpdateScheduleResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateSchedule not implemented")
+}
+func (UnimplementedWorkflowServiceServer) PatchSchedule(context.Context, *PatchScheduleRequest) (*PatchScheduleResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method PatchSchedule not implemented")
+}
+func (UnimplementedWorkflowServiceServer) ListSchedules(context.Context, *ListSchedulesRequest) (*ListSchedulesResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListSchedules not implemented")
+}
+func (UnimplementedWorkflowServiceServer) DeleteSchedule(context.Context, *DeleteScheduleRequest) (*DeleteScheduleResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteSchedule not implemented")
 }
 func (UnimplementedWorkflowServiceServer) mustEmbedUnimplementedWorkflowServiceServer() {}
 func (UnimplementedWorkflowServiceServer) testEmbeddedByValue()                         {}
@@ -648,6 +752,114 @@ func _WorkflowService_ListWorkflowExecutions_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WorkflowService_CreateSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateScheduleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WorkflowServiceServer).CreateSchedule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WorkflowService_CreateSchedule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WorkflowServiceServer).CreateSchedule(ctx, req.(*CreateScheduleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WorkflowService_DescribeSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DescribeScheduleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WorkflowServiceServer).DescribeSchedule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WorkflowService_DescribeSchedule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WorkflowServiceServer).DescribeSchedule(ctx, req.(*DescribeScheduleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WorkflowService_UpdateSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateScheduleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WorkflowServiceServer).UpdateSchedule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WorkflowService_UpdateSchedule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WorkflowServiceServer).UpdateSchedule(ctx, req.(*UpdateScheduleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WorkflowService_PatchSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PatchScheduleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WorkflowServiceServer).PatchSchedule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WorkflowService_PatchSchedule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WorkflowServiceServer).PatchSchedule(ctx, req.(*PatchScheduleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WorkflowService_ListSchedules_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListSchedulesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WorkflowServiceServer).ListSchedules(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WorkflowService_ListSchedules_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WorkflowServiceServer).ListSchedules(ctx, req.(*ListSchedulesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WorkflowService_DeleteSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteScheduleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WorkflowServiceServer).DeleteSchedule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WorkflowService_DeleteSchedule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WorkflowServiceServer).DeleteSchedule(ctx, req.(*DeleteScheduleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WorkflowService_ServiceDesc is the grpc.ServiceDesc for WorkflowService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -722,6 +934,30 @@ var WorkflowService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListWorkflowExecutions",
 			Handler:    _WorkflowService_ListWorkflowExecutions_Handler,
+		},
+		{
+			MethodName: "CreateSchedule",
+			Handler:    _WorkflowService_CreateSchedule_Handler,
+		},
+		{
+			MethodName: "DescribeSchedule",
+			Handler:    _WorkflowService_DescribeSchedule_Handler,
+		},
+		{
+			MethodName: "UpdateSchedule",
+			Handler:    _WorkflowService_UpdateSchedule_Handler,
+		},
+		{
+			MethodName: "PatchSchedule",
+			Handler:    _WorkflowService_PatchSchedule_Handler,
+		},
+		{
+			MethodName: "ListSchedules",
+			Handler:    _WorkflowService_ListSchedules_Handler,
+		},
+		{
+			MethodName: "DeleteSchedule",
+			Handler:    _WorkflowService_DeleteSchedule_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

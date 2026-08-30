@@ -1,0 +1,14 @@
+syntax = "proto3";
+package tempiex.api.enums.v1;
+option go_package = "github.com/tempiex/tempiex/api/gen/tempiex/api/enums/v1;enumsv1";
+
+// NamespaceState tracks the lifecycle of a namespace. A namespace is never
+// hard-deleted immediately: DEPRECATED namespaces reject new writes but keep
+// serving reads until the retention window elapses, at which point the
+// archiver (or an operator) transitions them to DELETED.
+enum NamespaceState {
+  NAMESPACE_STATE_UNSPECIFIED = 0;
+  NAMESPACE_STATE_REGISTERED = 1;
+  NAMESPACE_STATE_DEPRECATED = 2;
+  NAMESPACE_STATE_DELETED = 3;
+}

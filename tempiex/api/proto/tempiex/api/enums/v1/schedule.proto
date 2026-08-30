@@ -1,0 +1,19 @@
+syntax = "proto3";
+package tempiex.api.enums.v1;
+option go_package = "github.com/tempiex/tempiex/api/gen/tempiex/api/enums/v1;enumsv1";
+
+// ScheduleOverlapPolicy controls what happens when a scheduled action would
+// start while a previous run from the same schedule is still executing.
+enum ScheduleOverlapPolicy {
+  SCHEDULE_OVERLAP_POLICY_UNSPECIFIED = 0;
+  // Wait for the running execution to finish, then start the next one.
+  SCHEDULE_OVERLAP_POLICY_SKIP = 1;
+  // Start immediately, running concurrently with the existing execution.
+  SCHEDULE_OVERLAP_POLICY_ALLOW_ALL = 2;
+  // Cancel the running execution, then start the new one.
+  SCHEDULE_OVERLAP_POLICY_CANCEL_OTHER = 3;
+  // Terminate the running execution, then start the new one.
+  SCHEDULE_OVERLAP_POLICY_TERMINATE_OTHER = 4;
+  // Allow at most one concurrent execution plus one buffered.
+  SCHEDULE_OVERLAP_POLICY_BUFFER_ONE = 5;
+}

@@ -1,0 +1,31 @@
+syntax = "proto3";
+package tempiex.api.namespace.v1;
+option go_package = "github.com/tempiex/tempiex/api/gen/tempiex/api/namespace/v1;namespacev1";
+
+import "google/protobuf/timestamp.proto";
+import "tempiex/api/enums/v1/namespace.proto";
+
+// NamespaceInfo carries identity and lifecycle fields for a namespace.
+// Split from NamespaceConfig (tunable settings) so the two can evolve and be
+// updated independently: info changes are rare and audited, config changes
+// (e.g. retention) are routine operator actions.
+message NamespaceInfo {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  tempiex.api.enums.v1.NamespaceState state = 4;
+  map<string, string> data = 5;
+}
+
+message NamespaceConfig {
+  int32 retention_days = 1;
+}
+
+// Namespace is the full record returned by namespace-management RPCs
+// (OperatorService), combining identity, config, and audit timestamps.
+message Namespace {
+  NamespaceInfo info = 1;
+  NamespaceConfig config = 2;
+  google.protobuf.Timestamp failover_time = 3;
+  google.protobuf.Timestamp created_time = 4;
+}

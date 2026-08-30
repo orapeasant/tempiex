@@ -11,6 +11,7 @@ import (
 	v11 "github.com/tempiex/tempiex/api/gen/tempiex/api/enums/v1"
 	v13 "github.com/tempiex/tempiex/api/gen/tempiex/api/failure/v1"
 	v12 "github.com/tempiex/tempiex/api/gen/tempiex/api/history/v1"
+	v14 "github.com/tempiex/tempiex/api/gen/tempiex/api/schedule/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	durationpb "google.golang.org/protobuf/types/known/durationpb"
@@ -2262,11 +2263,690 @@ func (x *ListWorkflowExecutionsResponse) GetNextPageToken() []byte {
 	return nil
 }
 
+// CreateSchedule
+type CreateScheduleRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Namespace     string                 `protobuf:"bytes,1,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	ScheduleId    string                 `protobuf:"bytes,2,opt,name=schedule_id,json=scheduleId,proto3" json:"schedule_id,omitempty"`
+	Schedule      *v14.Schedule          `protobuf:"bytes,3,opt,name=schedule,proto3" json:"schedule,omitempty"`
+	RequestId     string                 `protobuf:"bytes,4,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateScheduleRequest) Reset() {
+	*x = CreateScheduleRequest{}
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[39]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateScheduleRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateScheduleRequest) ProtoMessage() {}
+
+func (x *CreateScheduleRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[39]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateScheduleRequest.ProtoReflect.Descriptor instead.
+func (*CreateScheduleRequest) Descriptor() ([]byte, []int) {
+	return file_tempiex_api_workflowservice_v1_service_proto_rawDescGZIP(), []int{39}
+}
+
+func (x *CreateScheduleRequest) GetNamespace() string {
+	if x != nil {
+		return x.Namespace
+	}
+	return ""
+}
+
+func (x *CreateScheduleRequest) GetScheduleId() string {
+	if x != nil {
+		return x.ScheduleId
+	}
+	return ""
+}
+
+func (x *CreateScheduleRequest) GetSchedule() *v14.Schedule {
+	if x != nil {
+		return x.Schedule
+	}
+	return nil
+}
+
+func (x *CreateScheduleRequest) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+type CreateScheduleResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateScheduleResponse) Reset() {
+	*x = CreateScheduleResponse{}
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[40]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateScheduleResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateScheduleResponse) ProtoMessage() {}
+
+func (x *CreateScheduleResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[40]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateScheduleResponse.ProtoReflect.Descriptor instead.
+func (*CreateScheduleResponse) Descriptor() ([]byte, []int) {
+	return file_tempiex_api_workflowservice_v1_service_proto_rawDescGZIP(), []int{40}
+}
+
+// DescribeSchedule
+type DescribeScheduleRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Namespace     string                 `protobuf:"bytes,1,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	ScheduleId    string                 `protobuf:"bytes,2,opt,name=schedule_id,json=scheduleId,proto3" json:"schedule_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DescribeScheduleRequest) Reset() {
+	*x = DescribeScheduleRequest{}
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[41]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DescribeScheduleRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DescribeScheduleRequest) ProtoMessage() {}
+
+func (x *DescribeScheduleRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[41]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DescribeScheduleRequest.ProtoReflect.Descriptor instead.
+func (*DescribeScheduleRequest) Descriptor() ([]byte, []int) {
+	return file_tempiex_api_workflowservice_v1_service_proto_rawDescGZIP(), []int{41}
+}
+
+func (x *DescribeScheduleRequest) GetNamespace() string {
+	if x != nil {
+		return x.Namespace
+	}
+	return ""
+}
+
+func (x *DescribeScheduleRequest) GetScheduleId() string {
+	if x != nil {
+		return x.ScheduleId
+	}
+	return ""
+}
+
+type DescribeScheduleResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Schedule      *v14.Schedule          `protobuf:"bytes,1,opt,name=schedule,proto3" json:"schedule,omitempty"`
+	Info          *v14.ScheduleInfo      `protobuf:"bytes,2,opt,name=info,proto3" json:"info,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DescribeScheduleResponse) Reset() {
+	*x = DescribeScheduleResponse{}
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[42]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DescribeScheduleResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DescribeScheduleResponse) ProtoMessage() {}
+
+func (x *DescribeScheduleResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[42]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DescribeScheduleResponse.ProtoReflect.Descriptor instead.
+func (*DescribeScheduleResponse) Descriptor() ([]byte, []int) {
+	return file_tempiex_api_workflowservice_v1_service_proto_rawDescGZIP(), []int{42}
+}
+
+func (x *DescribeScheduleResponse) GetSchedule() *v14.Schedule {
+	if x != nil {
+		return x.Schedule
+	}
+	return nil
+}
+
+func (x *DescribeScheduleResponse) GetInfo() *v14.ScheduleInfo {
+	if x != nil {
+		return x.Info
+	}
+	return nil
+}
+
+// UpdateSchedule replaces spec/action/policies wholesale (full overwrite,
+// no partial merge) — callers must DescribeSchedule first if they only want
+// to change one field.
+type UpdateScheduleRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Namespace     string                 `protobuf:"bytes,1,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	ScheduleId    string                 `protobuf:"bytes,2,opt,name=schedule_id,json=scheduleId,proto3" json:"schedule_id,omitempty"`
+	Schedule      *v14.Schedule          `protobuf:"bytes,3,opt,name=schedule,proto3" json:"schedule,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateScheduleRequest) Reset() {
+	*x = UpdateScheduleRequest{}
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[43]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateScheduleRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateScheduleRequest) ProtoMessage() {}
+
+func (x *UpdateScheduleRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[43]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateScheduleRequest.ProtoReflect.Descriptor instead.
+func (*UpdateScheduleRequest) Descriptor() ([]byte, []int) {
+	return file_tempiex_api_workflowservice_v1_service_proto_rawDescGZIP(), []int{43}
+}
+
+func (x *UpdateScheduleRequest) GetNamespace() string {
+	if x != nil {
+		return x.Namespace
+	}
+	return ""
+}
+
+func (x *UpdateScheduleRequest) GetScheduleId() string {
+	if x != nil {
+		return x.ScheduleId
+	}
+	return ""
+}
+
+func (x *UpdateScheduleRequest) GetSchedule() *v14.Schedule {
+	if x != nil {
+		return x.Schedule
+	}
+	return nil
+}
+
+type UpdateScheduleResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateScheduleResponse) Reset() {
+	*x = UpdateScheduleResponse{}
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[44]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateScheduleResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateScheduleResponse) ProtoMessage() {}
+
+func (x *UpdateScheduleResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[44]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateScheduleResponse.ProtoReflect.Descriptor instead.
+func (*UpdateScheduleResponse) Descriptor() ([]byte, []int) {
+	return file_tempiex_api_workflowservice_v1_service_proto_rawDescGZIP(), []int{44}
+}
+
+// PatchSchedule applies one-off, non-definitional actions (pause/unpause,
+// trigger an immediate run, or add notes) without touching the schedule's
+// spec/action — kept distinct from UpdateSchedule so these lightweight,
+// frequent operations don't require resending the full definition.
+type SchedulePatch struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	TriggerImmediately bool                   `protobuf:"varint,1,opt,name=trigger_immediately,json=triggerImmediately,proto3" json:"trigger_immediately,omitempty"`
+	Pause              bool                   `protobuf:"varint,2,opt,name=pause,proto3" json:"pause,omitempty"`
+	Unpause            bool                   `protobuf:"varint,3,opt,name=unpause,proto3" json:"unpause,omitempty"`
+	PauseNotes         string                 `protobuf:"bytes,4,opt,name=pause_notes,json=pauseNotes,proto3" json:"pause_notes,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *SchedulePatch) Reset() {
+	*x = SchedulePatch{}
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[45]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SchedulePatch) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SchedulePatch) ProtoMessage() {}
+
+func (x *SchedulePatch) ProtoReflect() protoreflect.Message {
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[45]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SchedulePatch.ProtoReflect.Descriptor instead.
+func (*SchedulePatch) Descriptor() ([]byte, []int) {
+	return file_tempiex_api_workflowservice_v1_service_proto_rawDescGZIP(), []int{45}
+}
+
+func (x *SchedulePatch) GetTriggerImmediately() bool {
+	if x != nil {
+		return x.TriggerImmediately
+	}
+	return false
+}
+
+func (x *SchedulePatch) GetPause() bool {
+	if x != nil {
+		return x.Pause
+	}
+	return false
+}
+
+func (x *SchedulePatch) GetUnpause() bool {
+	if x != nil {
+		return x.Unpause
+	}
+	return false
+}
+
+func (x *SchedulePatch) GetPauseNotes() string {
+	if x != nil {
+		return x.PauseNotes
+	}
+	return ""
+}
+
+type PatchScheduleRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Namespace     string                 `protobuf:"bytes,1,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	ScheduleId    string                 `protobuf:"bytes,2,opt,name=schedule_id,json=scheduleId,proto3" json:"schedule_id,omitempty"`
+	Patch         *SchedulePatch         `protobuf:"bytes,3,opt,name=patch,proto3" json:"patch,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PatchScheduleRequest) Reset() {
+	*x = PatchScheduleRequest{}
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[46]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PatchScheduleRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PatchScheduleRequest) ProtoMessage() {}
+
+func (x *PatchScheduleRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[46]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PatchScheduleRequest.ProtoReflect.Descriptor instead.
+func (*PatchScheduleRequest) Descriptor() ([]byte, []int) {
+	return file_tempiex_api_workflowservice_v1_service_proto_rawDescGZIP(), []int{46}
+}
+
+func (x *PatchScheduleRequest) GetNamespace() string {
+	if x != nil {
+		return x.Namespace
+	}
+	return ""
+}
+
+func (x *PatchScheduleRequest) GetScheduleId() string {
+	if x != nil {
+		return x.ScheduleId
+	}
+	return ""
+}
+
+func (x *PatchScheduleRequest) GetPatch() *SchedulePatch {
+	if x != nil {
+		return x.Patch
+	}
+	return nil
+}
+
+type PatchScheduleResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PatchScheduleResponse) Reset() {
+	*x = PatchScheduleResponse{}
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[47]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PatchScheduleResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PatchScheduleResponse) ProtoMessage() {}
+
+func (x *PatchScheduleResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[47]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PatchScheduleResponse.ProtoReflect.Descriptor instead.
+func (*PatchScheduleResponse) Descriptor() ([]byte, []int) {
+	return file_tempiex_api_workflowservice_v1_service_proto_rawDescGZIP(), []int{47}
+}
+
+// ListSchedules
+type ListSchedulesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Namespace     string                 `protobuf:"bytes,1,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	PageSize      int32                  `protobuf:"varint,2,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	NextPageToken []byte                 `protobuf:"bytes,3,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListSchedulesRequest) Reset() {
+	*x = ListSchedulesRequest{}
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[48]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListSchedulesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListSchedulesRequest) ProtoMessage() {}
+
+func (x *ListSchedulesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[48]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListSchedulesRequest.ProtoReflect.Descriptor instead.
+func (*ListSchedulesRequest) Descriptor() ([]byte, []int) {
+	return file_tempiex_api_workflowservice_v1_service_proto_rawDescGZIP(), []int{48}
+}
+
+func (x *ListSchedulesRequest) GetNamespace() string {
+	if x != nil {
+		return x.Namespace
+	}
+	return ""
+}
+
+func (x *ListSchedulesRequest) GetPageSize() int32 {
+	if x != nil {
+		return x.PageSize
+	}
+	return 0
+}
+
+func (x *ListSchedulesRequest) GetNextPageToken() []byte {
+	if x != nil {
+		return x.NextPageToken
+	}
+	return nil
+}
+
+type ListSchedulesResponse struct {
+	state         protoimpl.MessageState   `protogen:"open.v1"`
+	Schedules     []*v14.ScheduleListEntry `protobuf:"bytes,1,rep,name=schedules,proto3" json:"schedules,omitempty"`
+	NextPageToken []byte                   `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListSchedulesResponse) Reset() {
+	*x = ListSchedulesResponse{}
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[49]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListSchedulesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListSchedulesResponse) ProtoMessage() {}
+
+func (x *ListSchedulesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[49]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListSchedulesResponse.ProtoReflect.Descriptor instead.
+func (*ListSchedulesResponse) Descriptor() ([]byte, []int) {
+	return file_tempiex_api_workflowservice_v1_service_proto_rawDescGZIP(), []int{49}
+}
+
+func (x *ListSchedulesResponse) GetSchedules() []*v14.ScheduleListEntry {
+	if x != nil {
+		return x.Schedules
+	}
+	return nil
+}
+
+func (x *ListSchedulesResponse) GetNextPageToken() []byte {
+	if x != nil {
+		return x.NextPageToken
+	}
+	return nil
+}
+
+// DeleteSchedule
+type DeleteScheduleRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Namespace     string                 `protobuf:"bytes,1,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	ScheduleId    string                 `protobuf:"bytes,2,opt,name=schedule_id,json=scheduleId,proto3" json:"schedule_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteScheduleRequest) Reset() {
+	*x = DeleteScheduleRequest{}
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[50]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteScheduleRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteScheduleRequest) ProtoMessage() {}
+
+func (x *DeleteScheduleRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[50]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteScheduleRequest.ProtoReflect.Descriptor instead.
+func (*DeleteScheduleRequest) Descriptor() ([]byte, []int) {
+	return file_tempiex_api_workflowservice_v1_service_proto_rawDescGZIP(), []int{50}
+}
+
+func (x *DeleteScheduleRequest) GetNamespace() string {
+	if x != nil {
+		return x.Namespace
+	}
+	return ""
+}
+
+func (x *DeleteScheduleRequest) GetScheduleId() string {
+	if x != nil {
+		return x.ScheduleId
+	}
+	return ""
+}
+
+type DeleteScheduleResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteScheduleResponse) Reset() {
+	*x = DeleteScheduleResponse{}
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[51]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteScheduleResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteScheduleResponse) ProtoMessage() {}
+
+func (x *DeleteScheduleResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_tempiex_api_workflowservice_v1_service_proto_msgTypes[51]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteScheduleResponse.ProtoReflect.Descriptor instead.
+func (*DeleteScheduleResponse) Descriptor() ([]byte, []int) {
+	return file_tempiex_api_workflowservice_v1_service_proto_rawDescGZIP(), []int{51}
+}
+
 var File_tempiex_api_workflowservice_v1_service_proto protoreflect.FileDescriptor
 
 const file_tempiex_api_workflowservice_v1_service_proto_rawDesc = "" +
 	"\n" +
-	",tempiex/api/workflowservice/v1/service.proto\x12\x1etempiex.api.workflowservice.v1\x1a#tempiex/api/common/v1/message.proto\x1a$tempiex/api/history/v1/message.proto\x1a#tempiex/api/enums/v1/workflow.proto\x1a$tempiex/api/failure/v1/message.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/duration.proto\"w\n" +
+	",tempiex/api/workflowservice/v1/service.proto\x12\x1etempiex.api.workflowservice.v1\x1a#tempiex/api/common/v1/message.proto\x1a$tempiex/api/history/v1/message.proto\x1a#tempiex/api/enums/v1/workflow.proto\x1a$tempiex/api/failure/v1/message.proto\x1a%tempiex/api/schedule/v1/message.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/duration.proto\"w\n" +
 	"\x18RegisterNamespaceRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12 \n" +
 	"\vdescription\x18\x02 \x01(\tR\vdescription\x12%\n" +
@@ -2429,7 +3109,52 @@ const file_tempiex_api_workflowservice_v1_service_proto_rawDesc = "" +
 	"\n" +
 	"executions\x18\x01 \x03(\v2,.tempiex.api.common.v1.WorkflowExecutionInfoR\n" +
 	"executions\x12&\n" +
-	"\x0fnext_page_token\x18\x02 \x01(\fR\rnextPageToken2\x89\x15\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\fR\rnextPageToken\"\xb4\x01\n" +
+	"\x15CreateScheduleRequest\x12\x1c\n" +
+	"\tnamespace\x18\x01 \x01(\tR\tnamespace\x12\x1f\n" +
+	"\vschedule_id\x18\x02 \x01(\tR\n" +
+	"scheduleId\x12=\n" +
+	"\bschedule\x18\x03 \x01(\v2!.tempiex.api.schedule.v1.ScheduleR\bschedule\x12\x1d\n" +
+	"\n" +
+	"request_id\x18\x04 \x01(\tR\trequestId\"\x18\n" +
+	"\x16CreateScheduleResponse\"X\n" +
+	"\x17DescribeScheduleRequest\x12\x1c\n" +
+	"\tnamespace\x18\x01 \x01(\tR\tnamespace\x12\x1f\n" +
+	"\vschedule_id\x18\x02 \x01(\tR\n" +
+	"scheduleId\"\x94\x01\n" +
+	"\x18DescribeScheduleResponse\x12=\n" +
+	"\bschedule\x18\x01 \x01(\v2!.tempiex.api.schedule.v1.ScheduleR\bschedule\x129\n" +
+	"\x04info\x18\x02 \x01(\v2%.tempiex.api.schedule.v1.ScheduleInfoR\x04info\"\x95\x01\n" +
+	"\x15UpdateScheduleRequest\x12\x1c\n" +
+	"\tnamespace\x18\x01 \x01(\tR\tnamespace\x12\x1f\n" +
+	"\vschedule_id\x18\x02 \x01(\tR\n" +
+	"scheduleId\x12=\n" +
+	"\bschedule\x18\x03 \x01(\v2!.tempiex.api.schedule.v1.ScheduleR\bschedule\"\x18\n" +
+	"\x16UpdateScheduleResponse\"\x91\x01\n" +
+	"\rSchedulePatch\x12/\n" +
+	"\x13trigger_immediately\x18\x01 \x01(\bR\x12triggerImmediately\x12\x14\n" +
+	"\x05pause\x18\x02 \x01(\bR\x05pause\x12\x18\n" +
+	"\aunpause\x18\x03 \x01(\bR\aunpause\x12\x1f\n" +
+	"\vpause_notes\x18\x04 \x01(\tR\n" +
+	"pauseNotes\"\x9a\x01\n" +
+	"\x14PatchScheduleRequest\x12\x1c\n" +
+	"\tnamespace\x18\x01 \x01(\tR\tnamespace\x12\x1f\n" +
+	"\vschedule_id\x18\x02 \x01(\tR\n" +
+	"scheduleId\x12C\n" +
+	"\x05patch\x18\x03 \x01(\v2-.tempiex.api.workflowservice.v1.SchedulePatchR\x05patch\"\x17\n" +
+	"\x15PatchScheduleResponse\"y\n" +
+	"\x14ListSchedulesRequest\x12\x1c\n" +
+	"\tnamespace\x18\x01 \x01(\tR\tnamespace\x12\x1b\n" +
+	"\tpage_size\x18\x02 \x01(\x05R\bpageSize\x12&\n" +
+	"\x0fnext_page_token\x18\x03 \x01(\fR\rnextPageToken\"\x89\x01\n" +
+	"\x15ListSchedulesResponse\x12H\n" +
+	"\tschedules\x18\x01 \x03(\v2*.tempiex.api.schedule.v1.ScheduleListEntryR\tschedules\x12&\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\fR\rnextPageToken\"V\n" +
+	"\x15DeleteScheduleRequest\x12\x1c\n" +
+	"\tnamespace\x18\x01 \x01(\tR\tnamespace\x12\x1f\n" +
+	"\vschedule_id\x18\x02 \x01(\tR\n" +
+	"scheduleId\"\x18\n" +
+	"\x16DeleteScheduleResponse2\x90\x1b\n" +
 	"\x0fWorkflowService\x12\x88\x01\n" +
 	"\x11RegisterNamespace\x128.tempiex.api.workflowservice.v1.RegisterNamespaceRequest\x1a9.tempiex.api.workflowservice.v1.RegisterNamespaceResponse\x12\x88\x01\n" +
 	"\x11DescribeNamespace\x128.tempiex.api.workflowservice.v1.DescribeNamespaceRequest\x1a9.tempiex.api.workflowservice.v1.DescribeNamespaceResponse\x12\x97\x01\n" +
@@ -2447,7 +3172,13 @@ const file_tempiex_api_workflowservice_v1_service_proto_rawDesc = "" +
 	"\x1aTerminateWorkflowExecution\x12A.tempiex.api.workflowservice.v1.TerminateWorkflowExecutionRequest\x1aB.tempiex.api.workflowservice.v1.TerminateWorkflowExecutionResponse\x12|\n" +
 	"\rQueryWorkflow\x124.tempiex.api.workflowservice.v1.QueryWorkflowRequest\x1a5.tempiex.api.workflowservice.v1.QueryWorkflowResponse\x12\x9a\x01\n" +
 	"\x17CountWorkflowExecutions\x12>.tempiex.api.workflowservice.v1.CountWorkflowExecutionsRequest\x1a?.tempiex.api.workflowservice.v1.CountWorkflowExecutionsResponse\x12\x97\x01\n" +
-	"\x16ListWorkflowExecutions\x12=.tempiex.api.workflowservice.v1.ListWorkflowExecutionsRequest\x1a>.tempiex.api.workflowservice.v1.ListWorkflowExecutionsResponseBUZSgithub.com/tempiex/tempiex/api/gen/tempiex/api/workflowservice/v1;workflowservicev1b\x06proto3"
+	"\x16ListWorkflowExecutions\x12=.tempiex.api.workflowservice.v1.ListWorkflowExecutionsRequest\x1a>.tempiex.api.workflowservice.v1.ListWorkflowExecutionsResponse\x12\x7f\n" +
+	"\x0eCreateSchedule\x125.tempiex.api.workflowservice.v1.CreateScheduleRequest\x1a6.tempiex.api.workflowservice.v1.CreateScheduleResponse\x12\x85\x01\n" +
+	"\x10DescribeSchedule\x127.tempiex.api.workflowservice.v1.DescribeScheduleRequest\x1a8.tempiex.api.workflowservice.v1.DescribeScheduleResponse\x12\x7f\n" +
+	"\x0eUpdateSchedule\x125.tempiex.api.workflowservice.v1.UpdateScheduleRequest\x1a6.tempiex.api.workflowservice.v1.UpdateScheduleResponse\x12|\n" +
+	"\rPatchSchedule\x124.tempiex.api.workflowservice.v1.PatchScheduleRequest\x1a5.tempiex.api.workflowservice.v1.PatchScheduleResponse\x12|\n" +
+	"\rListSchedules\x124.tempiex.api.workflowservice.v1.ListSchedulesRequest\x1a5.tempiex.api.workflowservice.v1.ListSchedulesResponse\x12\x7f\n" +
+	"\x0eDeleteSchedule\x125.tempiex.api.workflowservice.v1.DeleteScheduleRequest\x1a6.tempiex.api.workflowservice.v1.DeleteScheduleResponseBUZSgithub.com/tempiex/tempiex/api/gen/tempiex/api/workflowservice/v1;workflowservicev1b\x06proto3"
 
 var (
 	file_tempiex_api_workflowservice_v1_service_proto_rawDescOnce sync.Once
@@ -2461,7 +3192,7 @@ func file_tempiex_api_workflowservice_v1_service_proto_rawDescGZIP() []byte {
 	return file_tempiex_api_workflowservice_v1_service_proto_rawDescData
 }
 
-var file_tempiex_api_workflowservice_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 39)
+var file_tempiex_api_workflowservice_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 52)
 var file_tempiex_api_workflowservice_v1_service_proto_goTypes = []any{
 	(*RegisterNamespaceRequest)(nil),                   // 0: tempiex.api.workflowservice.v1.RegisterNamespaceRequest
 	(*RegisterNamespaceResponse)(nil),                  // 1: tempiex.api.workflowservice.v1.RegisterNamespaceResponse
@@ -2502,101 +3233,135 @@ var file_tempiex_api_workflowservice_v1_service_proto_goTypes = []any{
 	(*CountWorkflowExecutionsResponse)(nil),            // 36: tempiex.api.workflowservice.v1.CountWorkflowExecutionsResponse
 	(*ListWorkflowExecutionsRequest)(nil),              // 37: tempiex.api.workflowservice.v1.ListWorkflowExecutionsRequest
 	(*ListWorkflowExecutionsResponse)(nil),             // 38: tempiex.api.workflowservice.v1.ListWorkflowExecutionsResponse
-	(*v1.WorkflowType)(nil),                            // 39: tempiex.api.common.v1.WorkflowType
-	(*v1.Payloads)(nil),                                // 40: tempiex.api.common.v1.Payloads
-	(*durationpb.Duration)(nil),                        // 41: google.protobuf.Duration
-	(*v1.WorkflowExecution)(nil),                       // 42: tempiex.api.common.v1.WorkflowExecution
-	(v11.WorkflowExecutionStatus)(0),                   // 43: tempiex.api.enums.v1.WorkflowExecutionStatus
-	(*timestamppb.Timestamp)(nil),                      // 44: google.protobuf.Timestamp
-	(*v12.History)(nil),                                // 45: tempiex.api.history.v1.History
-	(v11.CommandType)(0),                               // 46: tempiex.api.enums.v1.CommandType
-	(*v1.ActivityType)(nil),                            // 47: tempiex.api.common.v1.ActivityType
-	(*v13.Failure)(nil),                                // 48: tempiex.api.failure.v1.Failure
-	(*v1.WorkflowExecutionInfo)(nil),                   // 49: tempiex.api.common.v1.WorkflowExecutionInfo
+	(*CreateScheduleRequest)(nil),                      // 39: tempiex.api.workflowservice.v1.CreateScheduleRequest
+	(*CreateScheduleResponse)(nil),                     // 40: tempiex.api.workflowservice.v1.CreateScheduleResponse
+	(*DescribeScheduleRequest)(nil),                    // 41: tempiex.api.workflowservice.v1.DescribeScheduleRequest
+	(*DescribeScheduleResponse)(nil),                   // 42: tempiex.api.workflowservice.v1.DescribeScheduleResponse
+	(*UpdateScheduleRequest)(nil),                      // 43: tempiex.api.workflowservice.v1.UpdateScheduleRequest
+	(*UpdateScheduleResponse)(nil),                     // 44: tempiex.api.workflowservice.v1.UpdateScheduleResponse
+	(*SchedulePatch)(nil),                              // 45: tempiex.api.workflowservice.v1.SchedulePatch
+	(*PatchScheduleRequest)(nil),                       // 46: tempiex.api.workflowservice.v1.PatchScheduleRequest
+	(*PatchScheduleResponse)(nil),                      // 47: tempiex.api.workflowservice.v1.PatchScheduleResponse
+	(*ListSchedulesRequest)(nil),                       // 48: tempiex.api.workflowservice.v1.ListSchedulesRequest
+	(*ListSchedulesResponse)(nil),                      // 49: tempiex.api.workflowservice.v1.ListSchedulesResponse
+	(*DeleteScheduleRequest)(nil),                      // 50: tempiex.api.workflowservice.v1.DeleteScheduleRequest
+	(*DeleteScheduleResponse)(nil),                     // 51: tempiex.api.workflowservice.v1.DeleteScheduleResponse
+	(*v1.WorkflowType)(nil),                            // 52: tempiex.api.common.v1.WorkflowType
+	(*v1.Payloads)(nil),                                // 53: tempiex.api.common.v1.Payloads
+	(*durationpb.Duration)(nil),                        // 54: google.protobuf.Duration
+	(*v1.WorkflowExecution)(nil),                       // 55: tempiex.api.common.v1.WorkflowExecution
+	(v11.WorkflowExecutionStatus)(0),                   // 56: tempiex.api.enums.v1.WorkflowExecutionStatus
+	(*timestamppb.Timestamp)(nil),                      // 57: google.protobuf.Timestamp
+	(*v12.History)(nil),                                // 58: tempiex.api.history.v1.History
+	(v11.CommandType)(0),                               // 59: tempiex.api.enums.v1.CommandType
+	(*v1.ActivityType)(nil),                            // 60: tempiex.api.common.v1.ActivityType
+	(*v13.Failure)(nil),                                // 61: tempiex.api.failure.v1.Failure
+	(*v1.WorkflowExecutionInfo)(nil),                   // 62: tempiex.api.common.v1.WorkflowExecutionInfo
+	(*v14.Schedule)(nil),                               // 63: tempiex.api.schedule.v1.Schedule
+	(*v14.ScheduleInfo)(nil),                           // 64: tempiex.api.schedule.v1.ScheduleInfo
+	(*v14.ScheduleListEntry)(nil),                      // 65: tempiex.api.schedule.v1.ScheduleListEntry
 }
 var file_tempiex_api_workflowservice_v1_service_proto_depIdxs = []int32{
-	39, // 0: tempiex.api.workflowservice.v1.StartWorkflowExecutionRequest.workflow_type:type_name -> tempiex.api.common.v1.WorkflowType
-	40, // 1: tempiex.api.workflowservice.v1.StartWorkflowExecutionRequest.input:type_name -> tempiex.api.common.v1.Payloads
-	41, // 2: tempiex.api.workflowservice.v1.StartWorkflowExecutionRequest.workflow_execution_timeout:type_name -> google.protobuf.Duration
-	41, // 3: tempiex.api.workflowservice.v1.StartWorkflowExecutionRequest.workflow_run_timeout:type_name -> google.protobuf.Duration
-	41, // 4: tempiex.api.workflowservice.v1.StartWorkflowExecutionRequest.workflow_task_timeout:type_name -> google.protobuf.Duration
-	42, // 5: tempiex.api.workflowservice.v1.DescribeWorkflowExecutionRequest.execution:type_name -> tempiex.api.common.v1.WorkflowExecution
-	42, // 6: tempiex.api.workflowservice.v1.DescribeWorkflowExecutionResponse.execution:type_name -> tempiex.api.common.v1.WorkflowExecution
-	43, // 7: tempiex.api.workflowservice.v1.DescribeWorkflowExecutionResponse.status:type_name -> tempiex.api.enums.v1.WorkflowExecutionStatus
-	39, // 8: tempiex.api.workflowservice.v1.DescribeWorkflowExecutionResponse.workflow_type:type_name -> tempiex.api.common.v1.WorkflowType
-	44, // 9: tempiex.api.workflowservice.v1.DescribeWorkflowExecutionResponse.start_time:type_name -> google.protobuf.Timestamp
-	44, // 10: tempiex.api.workflowservice.v1.DescribeWorkflowExecutionResponse.close_time:type_name -> google.protobuf.Timestamp
-	42, // 11: tempiex.api.workflowservice.v1.GetWorkflowExecutionHistoryRequest.execution:type_name -> tempiex.api.common.v1.WorkflowExecution
-	45, // 12: tempiex.api.workflowservice.v1.GetWorkflowExecutionHistoryResponse.history:type_name -> tempiex.api.history.v1.History
-	42, // 13: tempiex.api.workflowservice.v1.PollWorkflowTaskQueueResponse.workflow_execution:type_name -> tempiex.api.common.v1.WorkflowExecution
-	39, // 14: tempiex.api.workflowservice.v1.PollWorkflowTaskQueueResponse.workflow_type:type_name -> tempiex.api.common.v1.WorkflowType
-	45, // 15: tempiex.api.workflowservice.v1.PollWorkflowTaskQueueResponse.history:type_name -> tempiex.api.history.v1.History
-	46, // 16: tempiex.api.workflowservice.v1.Command.command_type:type_name -> tempiex.api.enums.v1.CommandType
+	52, // 0: tempiex.api.workflowservice.v1.StartWorkflowExecutionRequest.workflow_type:type_name -> tempiex.api.common.v1.WorkflowType
+	53, // 1: tempiex.api.workflowservice.v1.StartWorkflowExecutionRequest.input:type_name -> tempiex.api.common.v1.Payloads
+	54, // 2: tempiex.api.workflowservice.v1.StartWorkflowExecutionRequest.workflow_execution_timeout:type_name -> google.protobuf.Duration
+	54, // 3: tempiex.api.workflowservice.v1.StartWorkflowExecutionRequest.workflow_run_timeout:type_name -> google.protobuf.Duration
+	54, // 4: tempiex.api.workflowservice.v1.StartWorkflowExecutionRequest.workflow_task_timeout:type_name -> google.protobuf.Duration
+	55, // 5: tempiex.api.workflowservice.v1.DescribeWorkflowExecutionRequest.execution:type_name -> tempiex.api.common.v1.WorkflowExecution
+	55, // 6: tempiex.api.workflowservice.v1.DescribeWorkflowExecutionResponse.execution:type_name -> tempiex.api.common.v1.WorkflowExecution
+	56, // 7: tempiex.api.workflowservice.v1.DescribeWorkflowExecutionResponse.status:type_name -> tempiex.api.enums.v1.WorkflowExecutionStatus
+	52, // 8: tempiex.api.workflowservice.v1.DescribeWorkflowExecutionResponse.workflow_type:type_name -> tempiex.api.common.v1.WorkflowType
+	57, // 9: tempiex.api.workflowservice.v1.DescribeWorkflowExecutionResponse.start_time:type_name -> google.protobuf.Timestamp
+	57, // 10: tempiex.api.workflowservice.v1.DescribeWorkflowExecutionResponse.close_time:type_name -> google.protobuf.Timestamp
+	55, // 11: tempiex.api.workflowservice.v1.GetWorkflowExecutionHistoryRequest.execution:type_name -> tempiex.api.common.v1.WorkflowExecution
+	58, // 12: tempiex.api.workflowservice.v1.GetWorkflowExecutionHistoryResponse.history:type_name -> tempiex.api.history.v1.History
+	55, // 13: tempiex.api.workflowservice.v1.PollWorkflowTaskQueueResponse.workflow_execution:type_name -> tempiex.api.common.v1.WorkflowExecution
+	52, // 14: tempiex.api.workflowservice.v1.PollWorkflowTaskQueueResponse.workflow_type:type_name -> tempiex.api.common.v1.WorkflowType
+	58, // 15: tempiex.api.workflowservice.v1.PollWorkflowTaskQueueResponse.history:type_name -> tempiex.api.history.v1.History
+	59, // 16: tempiex.api.workflowservice.v1.Command.command_type:type_name -> tempiex.api.enums.v1.CommandType
 	13, // 17: tempiex.api.workflowservice.v1.Command.schedule_activity_task_command_attributes:type_name -> tempiex.api.workflowservice.v1.ScheduleActivityTaskCommandAttributes
 	14, // 18: tempiex.api.workflowservice.v1.Command.complete_workflow_execution_command_attributes:type_name -> tempiex.api.workflowservice.v1.CompleteWorkflowExecutionCommandAttributes
 	15, // 19: tempiex.api.workflowservice.v1.Command.fail_workflow_execution_command_attributes:type_name -> tempiex.api.workflowservice.v1.FailWorkflowExecutionCommandAttributes
-	47, // 20: tempiex.api.workflowservice.v1.ScheduleActivityTaskCommandAttributes.activity_type:type_name -> tempiex.api.common.v1.ActivityType
-	40, // 21: tempiex.api.workflowservice.v1.ScheduleActivityTaskCommandAttributes.input:type_name -> tempiex.api.common.v1.Payloads
-	41, // 22: tempiex.api.workflowservice.v1.ScheduleActivityTaskCommandAttributes.start_to_close_timeout:type_name -> google.protobuf.Duration
-	40, // 23: tempiex.api.workflowservice.v1.CompleteWorkflowExecutionCommandAttributes.result:type_name -> tempiex.api.common.v1.Payloads
-	48, // 24: tempiex.api.workflowservice.v1.FailWorkflowExecutionCommandAttributes.failure:type_name -> tempiex.api.failure.v1.Failure
+	60, // 20: tempiex.api.workflowservice.v1.ScheduleActivityTaskCommandAttributes.activity_type:type_name -> tempiex.api.common.v1.ActivityType
+	53, // 21: tempiex.api.workflowservice.v1.ScheduleActivityTaskCommandAttributes.input:type_name -> tempiex.api.common.v1.Payloads
+	54, // 22: tempiex.api.workflowservice.v1.ScheduleActivityTaskCommandAttributes.start_to_close_timeout:type_name -> google.protobuf.Duration
+	53, // 23: tempiex.api.workflowservice.v1.CompleteWorkflowExecutionCommandAttributes.result:type_name -> tempiex.api.common.v1.Payloads
+	61, // 24: tempiex.api.workflowservice.v1.FailWorkflowExecutionCommandAttributes.failure:type_name -> tempiex.api.failure.v1.Failure
 	12, // 25: tempiex.api.workflowservice.v1.RespondWorkflowTaskCompletedRequest.commands:type_name -> tempiex.api.workflowservice.v1.Command
-	42, // 26: tempiex.api.workflowservice.v1.PollActivityTaskQueueResponse.workflow_execution:type_name -> tempiex.api.common.v1.WorkflowExecution
-	47, // 27: tempiex.api.workflowservice.v1.PollActivityTaskQueueResponse.activity_type:type_name -> tempiex.api.common.v1.ActivityType
-	40, // 28: tempiex.api.workflowservice.v1.PollActivityTaskQueueResponse.input:type_name -> tempiex.api.common.v1.Payloads
-	41, // 29: tempiex.api.workflowservice.v1.PollActivityTaskQueueResponse.start_to_close_timeout:type_name -> google.protobuf.Duration
-	40, // 30: tempiex.api.workflowservice.v1.PollActivityTaskQueueResponse.heartbeat_details:type_name -> tempiex.api.common.v1.Payloads
-	40, // 31: tempiex.api.workflowservice.v1.RespondActivityTaskCompletedRequest.result:type_name -> tempiex.api.common.v1.Payloads
-	48, // 32: tempiex.api.workflowservice.v1.RespondActivityTaskFailedRequest.failure:type_name -> tempiex.api.failure.v1.Failure
-	40, // 33: tempiex.api.workflowservice.v1.RecordActivityTaskHeartbeatRequest.details:type_name -> tempiex.api.common.v1.Payloads
-	42, // 34: tempiex.api.workflowservice.v1.SignalWorkflowExecutionRequest.workflow_execution:type_name -> tempiex.api.common.v1.WorkflowExecution
-	40, // 35: tempiex.api.workflowservice.v1.SignalWorkflowExecutionRequest.input:type_name -> tempiex.api.common.v1.Payloads
-	42, // 36: tempiex.api.workflowservice.v1.RequestCancelWorkflowExecutionRequest.workflow_execution:type_name -> tempiex.api.common.v1.WorkflowExecution
-	42, // 37: tempiex.api.workflowservice.v1.TerminateWorkflowExecutionRequest.workflow_execution:type_name -> tempiex.api.common.v1.WorkflowExecution
-	40, // 38: tempiex.api.workflowservice.v1.WorkflowQuery.query_args:type_name -> tempiex.api.common.v1.Payloads
-	42, // 39: tempiex.api.workflowservice.v1.QueryWorkflowRequest.execution:type_name -> tempiex.api.common.v1.WorkflowExecution
+	55, // 26: tempiex.api.workflowservice.v1.PollActivityTaskQueueResponse.workflow_execution:type_name -> tempiex.api.common.v1.WorkflowExecution
+	60, // 27: tempiex.api.workflowservice.v1.PollActivityTaskQueueResponse.activity_type:type_name -> tempiex.api.common.v1.ActivityType
+	53, // 28: tempiex.api.workflowservice.v1.PollActivityTaskQueueResponse.input:type_name -> tempiex.api.common.v1.Payloads
+	54, // 29: tempiex.api.workflowservice.v1.PollActivityTaskQueueResponse.start_to_close_timeout:type_name -> google.protobuf.Duration
+	53, // 30: tempiex.api.workflowservice.v1.PollActivityTaskQueueResponse.heartbeat_details:type_name -> tempiex.api.common.v1.Payloads
+	53, // 31: tempiex.api.workflowservice.v1.RespondActivityTaskCompletedRequest.result:type_name -> tempiex.api.common.v1.Payloads
+	61, // 32: tempiex.api.workflowservice.v1.RespondActivityTaskFailedRequest.failure:type_name -> tempiex.api.failure.v1.Failure
+	53, // 33: tempiex.api.workflowservice.v1.RecordActivityTaskHeartbeatRequest.details:type_name -> tempiex.api.common.v1.Payloads
+	55, // 34: tempiex.api.workflowservice.v1.SignalWorkflowExecutionRequest.workflow_execution:type_name -> tempiex.api.common.v1.WorkflowExecution
+	53, // 35: tempiex.api.workflowservice.v1.SignalWorkflowExecutionRequest.input:type_name -> tempiex.api.common.v1.Payloads
+	55, // 36: tempiex.api.workflowservice.v1.RequestCancelWorkflowExecutionRequest.workflow_execution:type_name -> tempiex.api.common.v1.WorkflowExecution
+	55, // 37: tempiex.api.workflowservice.v1.TerminateWorkflowExecutionRequest.workflow_execution:type_name -> tempiex.api.common.v1.WorkflowExecution
+	53, // 38: tempiex.api.workflowservice.v1.WorkflowQuery.query_args:type_name -> tempiex.api.common.v1.Payloads
+	55, // 39: tempiex.api.workflowservice.v1.QueryWorkflowRequest.execution:type_name -> tempiex.api.common.v1.WorkflowExecution
 	32, // 40: tempiex.api.workflowservice.v1.QueryWorkflowRequest.query:type_name -> tempiex.api.workflowservice.v1.WorkflowQuery
-	40, // 41: tempiex.api.workflowservice.v1.QueryWorkflowResponse.query_result:type_name -> tempiex.api.common.v1.Payloads
-	49, // 42: tempiex.api.workflowservice.v1.ListWorkflowExecutionsResponse.executions:type_name -> tempiex.api.common.v1.WorkflowExecutionInfo
-	0,  // 43: tempiex.api.workflowservice.v1.WorkflowService.RegisterNamespace:input_type -> tempiex.api.workflowservice.v1.RegisterNamespaceRequest
-	2,  // 44: tempiex.api.workflowservice.v1.WorkflowService.DescribeNamespace:input_type -> tempiex.api.workflowservice.v1.DescribeNamespaceRequest
-	4,  // 45: tempiex.api.workflowservice.v1.WorkflowService.StartWorkflowExecution:input_type -> tempiex.api.workflowservice.v1.StartWorkflowExecutionRequest
-	6,  // 46: tempiex.api.workflowservice.v1.WorkflowService.DescribeWorkflowExecution:input_type -> tempiex.api.workflowservice.v1.DescribeWorkflowExecutionRequest
-	8,  // 47: tempiex.api.workflowservice.v1.WorkflowService.GetWorkflowExecutionHistory:input_type -> tempiex.api.workflowservice.v1.GetWorkflowExecutionHistoryRequest
-	10, // 48: tempiex.api.workflowservice.v1.WorkflowService.PollWorkflowTaskQueue:input_type -> tempiex.api.workflowservice.v1.PollWorkflowTaskQueueRequest
-	16, // 49: tempiex.api.workflowservice.v1.WorkflowService.RespondWorkflowTaskCompleted:input_type -> tempiex.api.workflowservice.v1.RespondWorkflowTaskCompletedRequest
-	18, // 50: tempiex.api.workflowservice.v1.WorkflowService.PollActivityTaskQueue:input_type -> tempiex.api.workflowservice.v1.PollActivityTaskQueueRequest
-	20, // 51: tempiex.api.workflowservice.v1.WorkflowService.RespondActivityTaskCompleted:input_type -> tempiex.api.workflowservice.v1.RespondActivityTaskCompletedRequest
-	22, // 52: tempiex.api.workflowservice.v1.WorkflowService.RespondActivityTaskFailed:input_type -> tempiex.api.workflowservice.v1.RespondActivityTaskFailedRequest
-	24, // 53: tempiex.api.workflowservice.v1.WorkflowService.RecordActivityTaskHeartbeat:input_type -> tempiex.api.workflowservice.v1.RecordActivityTaskHeartbeatRequest
-	26, // 54: tempiex.api.workflowservice.v1.WorkflowService.SignalWorkflowExecution:input_type -> tempiex.api.workflowservice.v1.SignalWorkflowExecutionRequest
-	28, // 55: tempiex.api.workflowservice.v1.WorkflowService.RequestCancelWorkflowExecution:input_type -> tempiex.api.workflowservice.v1.RequestCancelWorkflowExecutionRequest
-	30, // 56: tempiex.api.workflowservice.v1.WorkflowService.TerminateWorkflowExecution:input_type -> tempiex.api.workflowservice.v1.TerminateWorkflowExecutionRequest
-	33, // 57: tempiex.api.workflowservice.v1.WorkflowService.QueryWorkflow:input_type -> tempiex.api.workflowservice.v1.QueryWorkflowRequest
-	35, // 58: tempiex.api.workflowservice.v1.WorkflowService.CountWorkflowExecutions:input_type -> tempiex.api.workflowservice.v1.CountWorkflowExecutionsRequest
-	37, // 59: tempiex.api.workflowservice.v1.WorkflowService.ListWorkflowExecutions:input_type -> tempiex.api.workflowservice.v1.ListWorkflowExecutionsRequest
-	1,  // 60: tempiex.api.workflowservice.v1.WorkflowService.RegisterNamespace:output_type -> tempiex.api.workflowservice.v1.RegisterNamespaceResponse
-	3,  // 61: tempiex.api.workflowservice.v1.WorkflowService.DescribeNamespace:output_type -> tempiex.api.workflowservice.v1.DescribeNamespaceResponse
-	5,  // 62: tempiex.api.workflowservice.v1.WorkflowService.StartWorkflowExecution:output_type -> tempiex.api.workflowservice.v1.StartWorkflowExecutionResponse
-	7,  // 63: tempiex.api.workflowservice.v1.WorkflowService.DescribeWorkflowExecution:output_type -> tempiex.api.workflowservice.v1.DescribeWorkflowExecutionResponse
-	9,  // 64: tempiex.api.workflowservice.v1.WorkflowService.GetWorkflowExecutionHistory:output_type -> tempiex.api.workflowservice.v1.GetWorkflowExecutionHistoryResponse
-	11, // 65: tempiex.api.workflowservice.v1.WorkflowService.PollWorkflowTaskQueue:output_type -> tempiex.api.workflowservice.v1.PollWorkflowTaskQueueResponse
-	17, // 66: tempiex.api.workflowservice.v1.WorkflowService.RespondWorkflowTaskCompleted:output_type -> tempiex.api.workflowservice.v1.RespondWorkflowTaskCompletedResponse
-	19, // 67: tempiex.api.workflowservice.v1.WorkflowService.PollActivityTaskQueue:output_type -> tempiex.api.workflowservice.v1.PollActivityTaskQueueResponse
-	21, // 68: tempiex.api.workflowservice.v1.WorkflowService.RespondActivityTaskCompleted:output_type -> tempiex.api.workflowservice.v1.RespondActivityTaskCompletedResponse
-	23, // 69: tempiex.api.workflowservice.v1.WorkflowService.RespondActivityTaskFailed:output_type -> tempiex.api.workflowservice.v1.RespondActivityTaskFailedResponse
-	25, // 70: tempiex.api.workflowservice.v1.WorkflowService.RecordActivityTaskHeartbeat:output_type -> tempiex.api.workflowservice.v1.RecordActivityTaskHeartbeatResponse
-	27, // 71: tempiex.api.workflowservice.v1.WorkflowService.SignalWorkflowExecution:output_type -> tempiex.api.workflowservice.v1.SignalWorkflowExecutionResponse
-	29, // 72: tempiex.api.workflowservice.v1.WorkflowService.RequestCancelWorkflowExecution:output_type -> tempiex.api.workflowservice.v1.RequestCancelWorkflowExecutionResponse
-	31, // 73: tempiex.api.workflowservice.v1.WorkflowService.TerminateWorkflowExecution:output_type -> tempiex.api.workflowservice.v1.TerminateWorkflowExecutionResponse
-	34, // 74: tempiex.api.workflowservice.v1.WorkflowService.QueryWorkflow:output_type -> tempiex.api.workflowservice.v1.QueryWorkflowResponse
-	36, // 75: tempiex.api.workflowservice.v1.WorkflowService.CountWorkflowExecutions:output_type -> tempiex.api.workflowservice.v1.CountWorkflowExecutionsResponse
-	38, // 76: tempiex.api.workflowservice.v1.WorkflowService.ListWorkflowExecutions:output_type -> tempiex.api.workflowservice.v1.ListWorkflowExecutionsResponse
-	60, // [60:77] is the sub-list for method output_type
-	43, // [43:60] is the sub-list for method input_type
-	43, // [43:43] is the sub-list for extension type_name
-	43, // [43:43] is the sub-list for extension extendee
-	0,  // [0:43] is the sub-list for field type_name
+	53, // 41: tempiex.api.workflowservice.v1.QueryWorkflowResponse.query_result:type_name -> tempiex.api.common.v1.Payloads
+	62, // 42: tempiex.api.workflowservice.v1.ListWorkflowExecutionsResponse.executions:type_name -> tempiex.api.common.v1.WorkflowExecutionInfo
+	63, // 43: tempiex.api.workflowservice.v1.CreateScheduleRequest.schedule:type_name -> tempiex.api.schedule.v1.Schedule
+	63, // 44: tempiex.api.workflowservice.v1.DescribeScheduleResponse.schedule:type_name -> tempiex.api.schedule.v1.Schedule
+	64, // 45: tempiex.api.workflowservice.v1.DescribeScheduleResponse.info:type_name -> tempiex.api.schedule.v1.ScheduleInfo
+	63, // 46: tempiex.api.workflowservice.v1.UpdateScheduleRequest.schedule:type_name -> tempiex.api.schedule.v1.Schedule
+	45, // 47: tempiex.api.workflowservice.v1.PatchScheduleRequest.patch:type_name -> tempiex.api.workflowservice.v1.SchedulePatch
+	65, // 48: tempiex.api.workflowservice.v1.ListSchedulesResponse.schedules:type_name -> tempiex.api.schedule.v1.ScheduleListEntry
+	0,  // 49: tempiex.api.workflowservice.v1.WorkflowService.RegisterNamespace:input_type -> tempiex.api.workflowservice.v1.RegisterNamespaceRequest
+	2,  // 50: tempiex.api.workflowservice.v1.WorkflowService.DescribeNamespace:input_type -> tempiex.api.workflowservice.v1.DescribeNamespaceRequest
+	4,  // 51: tempiex.api.workflowservice.v1.WorkflowService.StartWorkflowExecution:input_type -> tempiex.api.workflowservice.v1.StartWorkflowExecutionRequest
+	6,  // 52: tempiex.api.workflowservice.v1.WorkflowService.DescribeWorkflowExecution:input_type -> tempiex.api.workflowservice.v1.DescribeWorkflowExecutionRequest
+	8,  // 53: tempiex.api.workflowservice.v1.WorkflowService.GetWorkflowExecutionHistory:input_type -> tempiex.api.workflowservice.v1.GetWorkflowExecutionHistoryRequest
+	10, // 54: tempiex.api.workflowservice.v1.WorkflowService.PollWorkflowTaskQueue:input_type -> tempiex.api.workflowservice.v1.PollWorkflowTaskQueueRequest
+	16, // 55: tempiex.api.workflowservice.v1.WorkflowService.RespondWorkflowTaskCompleted:input_type -> tempiex.api.workflowservice.v1.RespondWorkflowTaskCompletedRequest
+	18, // 56: tempiex.api.workflowservice.v1.WorkflowService.PollActivityTaskQueue:input_type -> tempiex.api.workflowservice.v1.PollActivityTaskQueueRequest
+	20, // 57: tempiex.api.workflowservice.v1.WorkflowService.RespondActivityTaskCompleted:input_type -> tempiex.api.workflowservice.v1.RespondActivityTaskCompletedRequest
+	22, // 58: tempiex.api.workflowservice.v1.WorkflowService.RespondActivityTaskFailed:input_type -> tempiex.api.workflowservice.v1.RespondActivityTaskFailedRequest
+	24, // 59: tempiex.api.workflowservice.v1.WorkflowService.RecordActivityTaskHeartbeat:input_type -> tempiex.api.workflowservice.v1.RecordActivityTaskHeartbeatRequest
+	26, // 60: tempiex.api.workflowservice.v1.WorkflowService.SignalWorkflowExecution:input_type -> tempiex.api.workflowservice.v1.SignalWorkflowExecutionRequest
+	28, // 61: tempiex.api.workflowservice.v1.WorkflowService.RequestCancelWorkflowExecution:input_type -> tempiex.api.workflowservice.v1.RequestCancelWorkflowExecutionRequest
+	30, // 62: tempiex.api.workflowservice.v1.WorkflowService.TerminateWorkflowExecution:input_type -> tempiex.api.workflowservice.v1.TerminateWorkflowExecutionRequest
+	33, // 63: tempiex.api.workflowservice.v1.WorkflowService.QueryWorkflow:input_type -> tempiex.api.workflowservice.v1.QueryWorkflowRequest
+	35, // 64: tempiex.api.workflowservice.v1.WorkflowService.CountWorkflowExecutions:input_type -> tempiex.api.workflowservice.v1.CountWorkflowExecutionsRequest
+	37, // 65: tempiex.api.workflowservice.v1.WorkflowService.ListWorkflowExecutions:input_type -> tempiex.api.workflowservice.v1.ListWorkflowExecutionsRequest
+	39, // 66: tempiex.api.workflowservice.v1.WorkflowService.CreateSchedule:input_type -> tempiex.api.workflowservice.v1.CreateScheduleRequest
+	41, // 67: tempiex.api.workflowservice.v1.WorkflowService.DescribeSchedule:input_type -> tempiex.api.workflowservice.v1.DescribeScheduleRequest
+	43, // 68: tempiex.api.workflowservice.v1.WorkflowService.UpdateSchedule:input_type -> tempiex.api.workflowservice.v1.UpdateScheduleRequest
+	46, // 69: tempiex.api.workflowservice.v1.WorkflowService.PatchSchedule:input_type -> tempiex.api.workflowservice.v1.PatchScheduleRequest
+	48, // 70: tempiex.api.workflowservice.v1.WorkflowService.ListSchedules:input_type -> tempiex.api.workflowservice.v1.ListSchedulesRequest
+	50, // 71: tempiex.api.workflowservice.v1.WorkflowService.DeleteSchedule:input_type -> tempiex.api.workflowservice.v1.DeleteScheduleRequest
+	1,  // 72: tempiex.api.workflowservice.v1.WorkflowService.RegisterNamespace:output_type -> tempiex.api.workflowservice.v1.RegisterNamespaceResponse
+	3,  // 73: tempiex.api.workflowservice.v1.WorkflowService.DescribeNamespace:output_type -> tempiex.api.workflowservice.v1.DescribeNamespaceResponse
+	5,  // 74: tempiex.api.workflowservice.v1.WorkflowService.StartWorkflowExecution:output_type -> tempiex.api.workflowservice.v1.StartWorkflowExecutionResponse
+	7,  // 75: tempiex.api.workflowservice.v1.WorkflowService.DescribeWorkflowExecution:output_type -> tempiex.api.workflowservice.v1.DescribeWorkflowExecutionResponse
+	9,  // 76: tempiex.api.workflowservice.v1.WorkflowService.GetWorkflowExecutionHistory:output_type -> tempiex.api.workflowservice.v1.GetWorkflowExecutionHistoryResponse
+	11, // 77: tempiex.api.workflowservice.v1.WorkflowService.PollWorkflowTaskQueue:output_type -> tempiex.api.workflowservice.v1.PollWorkflowTaskQueueResponse
+	17, // 78: tempiex.api.workflowservice.v1.WorkflowService.RespondWorkflowTaskCompleted:output_type -> tempiex.api.workflowservice.v1.RespondWorkflowTaskCompletedResponse
+	19, // 79: tempiex.api.workflowservice.v1.WorkflowService.PollActivityTaskQueue:output_type -> tempiex.api.workflowservice.v1.PollActivityTaskQueueResponse
+	21, // 80: tempiex.api.workflowservice.v1.WorkflowService.RespondActivityTaskCompleted:output_type -> tempiex.api.workflowservice.v1.RespondActivityTaskCompletedResponse
+	23, // 81: tempiex.api.workflowservice.v1.WorkflowService.RespondActivityTaskFailed:output_type -> tempiex.api.workflowservice.v1.RespondActivityTaskFailedResponse
+	25, // 82: tempiex.api.workflowservice.v1.WorkflowService.RecordActivityTaskHeartbeat:output_type -> tempiex.api.workflowservice.v1.RecordActivityTaskHeartbeatResponse
+	27, // 83: tempiex.api.workflowservice.v1.WorkflowService.SignalWorkflowExecution:output_type -> tempiex.api.workflowservice.v1.SignalWorkflowExecutionResponse
+	29, // 84: tempiex.api.workflowservice.v1.WorkflowService.RequestCancelWorkflowExecution:output_type -> tempiex.api.workflowservice.v1.RequestCancelWorkflowExecutionResponse
+	31, // 85: tempiex.api.workflowservice.v1.WorkflowService.TerminateWorkflowExecution:output_type -> tempiex.api.workflowservice.v1.TerminateWorkflowExecutionResponse
+	34, // 86: tempiex.api.workflowservice.v1.WorkflowService.QueryWorkflow:output_type -> tempiex.api.workflowservice.v1.QueryWorkflowResponse
+	36, // 87: tempiex.api.workflowservice.v1.WorkflowService.CountWorkflowExecutions:output_type -> tempiex.api.workflowservice.v1.CountWorkflowExecutionsResponse
+	38, // 88: tempiex.api.workflowservice.v1.WorkflowService.ListWorkflowExecutions:output_type -> tempiex.api.workflowservice.v1.ListWorkflowExecutionsResponse
+	40, // 89: tempiex.api.workflowservice.v1.WorkflowService.CreateSchedule:output_type -> tempiex.api.workflowservice.v1.CreateScheduleResponse
+	42, // 90: tempiex.api.workflowservice.v1.WorkflowService.DescribeSchedule:output_type -> tempiex.api.workflowservice.v1.DescribeScheduleResponse
+	44, // 91: tempiex.api.workflowservice.v1.WorkflowService.UpdateSchedule:output_type -> tempiex.api.workflowservice.v1.UpdateScheduleResponse
+	47, // 92: tempiex.api.workflowservice.v1.WorkflowService.PatchSchedule:output_type -> tempiex.api.workflowservice.v1.PatchScheduleResponse
+	49, // 93: tempiex.api.workflowservice.v1.WorkflowService.ListSchedules:output_type -> tempiex.api.workflowservice.v1.ListSchedulesResponse
+	51, // 94: tempiex.api.workflowservice.v1.WorkflowService.DeleteSchedule:output_type -> tempiex.api.workflowservice.v1.DeleteScheduleResponse
+	72, // [72:95] is the sub-list for method output_type
+	49, // [49:72] is the sub-list for method input_type
+	49, // [49:49] is the sub-list for extension type_name
+	49, // [49:49] is the sub-list for extension extendee
+	0,  // [0:49] is the sub-list for field type_name
 }
 
 func init() { file_tempiex_api_workflowservice_v1_service_proto_init() }
@@ -2615,7 +3380,7 @@ func file_tempiex_api_workflowservice_v1_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_tempiex_api_workflowservice_v1_service_proto_rawDesc), len(file_tempiex_api_workflowservice_v1_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   39,
+			NumMessages:   52,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -6,6 +6,7 @@ import "tempiex/api/common/v1/message.proto";
 import "tempiex/api/history/v1/message.proto";
 import "tempiex/api/enums/v1/workflow.proto";
 import "tempiex/api/failure/v1/message.proto";
+import "tempiex/api/schedule/v1/message.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/duration.proto";
 
@@ -27,6 +28,17 @@ service WorkflowService {
   rpc QueryWorkflow(QueryWorkflowRequest) returns (QueryWorkflowResponse);
   rpc CountWorkflowExecutions(CountWorkflowExecutionsRequest) returns (CountWorkflowExecutionsResponse);
   rpc ListWorkflowExecutions(ListWorkflowExecutionsRequest) returns (ListWorkflowExecutionsResponse);
+
+  // Schedules: create/manage a recurring definition that the internal
+  // schedule worker (internal/worker) evaluates and fires as new workflow
+  // executions. Modeled as WorkflowService RPCs (not a separate service)
+  // since schedules operate within a single namespace like workflows do.
+  rpc CreateSchedule(CreateScheduleRequest) returns (CreateScheduleResponse);
+  rpc DescribeSchedule(DescribeScheduleRequest) returns (DescribeScheduleResponse);
+  rpc UpdateSchedule(UpdateScheduleRequest) returns (UpdateScheduleResponse);
+  rpc PatchSchedule(PatchScheduleRequest) returns (PatchScheduleResponse);
+  rpc ListSchedules(ListSchedulesRequest) returns (ListSchedulesResponse);
+  rpc DeleteSchedule(DeleteScheduleRequest) returns (DeleteScheduleResponse);
 }
 
 // Namespace
@@ -236,3 +248,67 @@ message ListWorkflowExecutionsResponse {
   repeated tempiex.api.common.v1.WorkflowExecutionInfo executions = 1;
   bytes next_page_token = 2;
 }
+
+// CreateSchedule
+message CreateScheduleRequest {
+  string namespace = 1;
+  string schedule_id = 2;
+  tempiex.api.schedule.v1.Schedule schedule = 3;
+  string request_id = 4;
+}
+message CreateScheduleResponse {}
+
+// DescribeSchedule
+message DescribeScheduleRequest {
+  string namespace = 1;
+  string schedule_id = 2;
+}
+message DescribeScheduleResponse {
+  tempiex.api.schedule.v1.Schedule schedule = 1;
+  tempiex.api.schedule.v1.ScheduleInfo info = 2;
+}
+
+// UpdateSchedule replaces spec/action/policies wholesale (full overwrite,
+// no partial merge) — callers must DescribeSchedule first if they only want
+// to change one field.
+message UpdateScheduleRequest {
+  string namespace = 1;
+  string schedule_id = 2;
+  tempiex.api.schedule.v1.Schedule schedule = 3;
+}
+message UpdateScheduleResponse {}
+
+// PatchSchedule applies one-off, non-definitional actions (pause/unpause,
+// trigger an immediate run, or add notes) without touching the schedule's
+// spec/action — kept distinct from UpdateSchedule so these lightweight,
+// frequent operations don't require resending the full definition.
+message SchedulePatch {
+  bool trigger_immediately = 1;
+  bool pause = 2;
+  bool unpause = 3;
+  string pause_notes = 4;
+}
+message PatchScheduleRequest {
+  string namespace = 1;
+  string schedule_id = 2;
+  SchedulePatch patch = 3;
+}
+message PatchScheduleResponse {}
+
+// ListSchedules
+message ListSchedulesRequest {
+  string namespace = 1;
+  int32 page_size = 2;
+  bytes next_page_token = 3;
+}
+message ListSchedulesResponse {
+  repeated tempiex.api.schedule.v1.ScheduleListEntry schedules = 1;
+  bytes next_page_token = 2;
+}
+
+// DeleteSchedule
+message DeleteScheduleRequest {
+  string namespace = 1;
+  string schedule_id = 2;
+}
+message DeleteScheduleResponse {}

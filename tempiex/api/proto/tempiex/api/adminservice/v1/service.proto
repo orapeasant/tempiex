@@ -1,0 +1,103 @@
+syntax = "proto3";
+package tempiex.api.adminservice.v1;
+option go_package = "github.com/tempiex/tempiex/api/gen/tempiex/api/adminservice/v1;adminservicev1";
+
+import "google/protobuf/timestamp.proto";
+import "tempiex/api/common/v1/message.proto";
+import "tempiex/api/history/v1/message.proto";
+
+// AdminService exposes low-level, implementation-visible operations used for
+// debugging and operations (raw history without payload decoding, shard-
+// level task inspection, mutable-state dumps). Unlike OperatorService, these
+// RPCs are shard/engine-aware and are expected to change as the History
+// service's internal sharding and task-processor design (PLAN.md step 9)
+// evolves; treat this surface as less stable than WorkflowService.
+service AdminService {
+  rpc DescribeCluster(DescribeClusterRequest) returns (DescribeClusterResponse);
+  rpc DescribeMutableState(DescribeMutableStateRequest) returns (DescribeMutableStateResponse);
+  rpc GetWorkflowExecutionRawHistory(GetWorkflowExecutionRawHistoryRequest) returns (GetWorkflowExecutionRawHistoryResponse);
+  rpc ListHistoryTasks(ListHistoryTasksRequest) returns (ListHistoryTasksResponse);
+  rpc RefreshWorkflowTasks(RefreshWorkflowTasksRequest) returns (RefreshWorkflowTasksResponse);
+}
+
+// DescribeCluster
+message DescribeClusterRequest {}
+message DescribeClusterResponse {
+  string cluster_name = 1;
+  int32 history_shard_count = 2;
+  string persistence_store = 3;
+  google.protobuf.Timestamp server_start_time = 4;
+}
+
+// DescribeMutableState returns the in-memory (and persisted) mutable state
+// History holds for a running execution — the same state driving command
+// application in internal/history.Engine — for debugging stuck workflows
+// without needing direct DB access.
+message DescribeMutableStateRequest {
+  string namespace = 1;
+  tempiex.api.common.v1.WorkflowExecution execution = 2;
+}
+message DescribeMutableStateResponse {
+  // JSON-encoded dump of the mutable state; kept opaque/untyped here since
+  // the internal representation is expected to change frequently as history
+  // sharding and task processors are built out.
+  bytes mutable_state_json = 1;
+  int64 next_event_id = 2;
+  int64 last_first_event_id = 3;
+}
+
+// GetWorkflowExecutionRawHistory returns history events without resolving
+// payloads through a data converter/codec — used by admin tooling and
+// cross-cluster replication (future), as opposed to
+// WorkflowService.GetWorkflowExecutionHistory which is the client-facing,
+// payload-aware equivalent.
+message GetWorkflowExecutionRawHistoryRequest {
+  string namespace = 1;
+  tempiex.api.common.v1.WorkflowExecution execution = 2;
+  int32 page_size = 3;
+  bytes next_page_token = 4;
+}
+message GetWorkflowExecutionRawHistoryResponse {
+  repeated tempiex.api.history.v1.HistoryEvent history_events = 1;
+  bytes next_page_token = 2;
+}
+
+// HistoryTaskCategory distinguishes the two background queues History's
+// processors drain: transfer tasks (dispatch work to Matching) and timer
+// tasks (fire workflow/activity timeouts and user timers).
+enum HistoryTaskCategory {
+  HISTORY_TASK_CATEGORY_UNSPECIFIED = 0;
+  HISTORY_TASK_CATEGORY_TRANSFER = 1;
+  HISTORY_TASK_CATEGORY_TIMER = 2;
+}
+
+// ListHistoryTasks inspects a shard's pending transfer/timer task queue —
+// primarily for diagnosing stuck task processors (e.g. a timer that never
+// fires, or a transfer task Matching never picks up).
+message ListHistoryTasksRequest {
+  int32 shard_id = 1;
+  HistoryTaskCategory category = 2;
+  int32 page_size = 3;
+  bytes next_page_token = 4;
+}
+message HistoryTaskInfo {
+  int64 task_id = 1;
+  string namespace_id = 2;
+  string workflow_id = 3;
+  string run_id = 4;
+  google.protobuf.Timestamp visibility_time = 5;
+}
+message ListHistoryTasksResponse {
+  repeated HistoryTaskInfo tasks = 1;
+  bytes next_page_token = 2;
+}
+
+// RefreshWorkflowTasks forces History to re-derive and re-enqueue transfer
+// and timer tasks for an execution from its current mutable state — a
+// recovery tool for when tasks were lost (e.g. a bug, or manual DB repair)
+// without needing to replay the entire history.
+message RefreshWorkflowTasksRequest {
+  string namespace = 1;
+  tempiex.api.common.v1.WorkflowExecution execution = 2;
+}
+message RefreshWorkflowTasksResponse {}

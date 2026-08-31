@@ -1,0 +1,15 @@
+tempiex:
+  address: "tempiex:8133"
+  namespace: "default"
+  tls:
+    enabled: false
+  apiKey: ""
+
+workers:
+  - taskQueue: "worker-default"
+    maxConcurrentActivities: 10
+    maxConcurrentWorkflowTasks: 5
+
+log:
+  level: "info"
+  format: "json"

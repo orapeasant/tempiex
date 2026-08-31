@@ -3,6 +3,7 @@ module github.com/tempiex/worker
 go 1.25
 
 require (
+	github.com/goccy/go-yaml v1.15.23
 	github.com/rs/zerolog v1.34.0
 	github.com/tempiex/tempiex v0.0.0
 	google.golang.org/grpc v1.72.2

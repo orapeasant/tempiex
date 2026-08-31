@@ -7,6 +7,8 @@ import { registerClusterCommands } from './commands/cluster/index.js';
 import { registerTaskQueueCommands } from './commands/taskqueue/index.js';
 import { registerConfigCommands } from './commands/config/index.js';
 import { registerServerCommands } from './commands/server/index.js';
+import { registerWorkerCommands } from './commands/worker/index.js';
+import { registerPiCommands } from './commands/pi/index.js';
 import { App } from './app/App.js';
 import { resolveConfig } from './config/loader.js';
 import { TempiexHttpClient } from './client/http.js';
@@ -31,6 +33,8 @@ registerClusterCommands(program);
 registerTaskQueueCommands(program);
 registerConfigCommands(program);
 registerServerCommands(program);
+registerWorkerCommands(program);
+registerPiCommands(program);
 
 // If no sub-command is given, launch interactive TUI
 program.action((opts) => {

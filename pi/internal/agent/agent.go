@@ -13,17 +13,17 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	workflowservicev1 "github.com/tempiex/tempiex/api/gen/tempiex/api/workflowservice/v1"
+	"github.com/tempiex/worker"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
+	"github.com/tempiex/pi/internal/activity"
 	"github.com/tempiex/pi/internal/api"
 	"github.com/tempiex/pi/internal/config"
 	"github.com/tempiex/pi/internal/event"
 	"github.com/tempiex/pi/internal/metrics"
 	"github.com/tempiex/pi/internal/session"
 	"github.com/tempiex/pi/internal/tool"
-	"github.com/tempiex/pi/internal/worker"
-	"github.com/tempiex/pi/internal/worker/activity"
 )
 
 type Options struct {
@@ -80,7 +80,18 @@ func (a *Agent) Run(ctx context.Context) error {
 		logger,
 	)
 
-	pool := worker.New(cfg.Workers, client, exec, logger)
+	// The generic worker.Pool speaks worker.Config, not pi's own
+	// config.WorkerConfig — translate field-for-field so pi's YAML schema
+	// stays independent of the worker module's Go API.
+	workerCfgs := make([]worker.Config, len(cfg.Workers))
+	for i, w := range cfg.Workers {
+		workerCfgs[i] = worker.Config{
+			TaskQueue:                  w.TaskQueue,
+			MaxConcurrentActivities:    w.MaxConcurrentActivities,
+			MaxConcurrentWorkflowTasks: w.MaxConcurrentWorkflowTasks,
+		}
+	}
+	pool := worker.New(workerCfgs, client, exec, logger)
 
 	router := api.NewRouter(mgr, bus, a.opts.Registry, client, cfg.API.CORSOrigins, logger)
 	addr := fmt.Sprintf("%s:%d", cfg.API.Host, cfg.API.Port)

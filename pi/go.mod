@@ -7,6 +7,7 @@ require (
 	github.com/goccy/go-yaml v1.15.23
 	github.com/rs/zerolog v1.34.0
 	github.com/tempiex/tempiex v0.0.0
+	github.com/tempiex/worker v0.0.0
 	go.opentelemetry.io/otel v1.36.0
 	go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc v1.36.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.36.0
@@ -45,3 +46,5 @@ require (
 )
 
 replace github.com/tempiex/tempiex => ../tempiex
+
+replace github.com/tempiex/worker => ../worker

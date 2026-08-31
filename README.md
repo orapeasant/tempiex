@@ -49,6 +49,7 @@ Tempiex is a durable workflow orchestration engine — a clean-room implementati
 | Web UI | `web/` | — (embedded in server) | React + TypeScript |
 | CLI | `cli/` | — | TypeScript + Ink |
 | Python SDK | `sdk-python/` | — | Python 3.10+ |
+| Generic worker | `worker/` | — | Go |
 | Pi agent harness | `pi/` | `8090` | Go |
 
 ---
@@ -356,6 +357,8 @@ tempiex cluster   describe | health
 tempiex taskqueue describe
 tempiex config    list | get | set | delete
 tempiex server    start-dev
+tempiex worker    start-dev
+tempiex pi        start-dev
 ```
 
 ### Config profiles
@@ -460,11 +463,13 @@ sdk-python/               # Python SDK — pure Python + grpcio
 cli/                      # TypeScript + Ink v5 CLI
   src/
     main.tsx              # Commander root
-    commands/             # workflow/, namespace/, cluster/, config/
+    commands/             # workflow/, namespace/, cluster/, config/, server/, worker/, pi/
     components/           # Table, StatusBadge, Spinner, ErrorPanel
     hooks/                # Data-fetching hooks
 
-pi/                       # Go — Pi agent harness (edge runner)
+worker/                   # Go — generic Tempiex activity worker (task-queue polling/dispatch)
+
+pi/                       # Go — Pi AI agent harness (edge runner), depends on worker/
 
 docs/spec/                # Design specifications
   01-tempiex.md           # Core engine
@@ -472,8 +477,9 @@ docs/spec/                # Design specifications
   03-server.md            # UI server
   04-web.md               # Web UI
   05-cli.md               # CLI
-  06-pi.md                # Pi agent
+  06-pi.md                # Pi agent harness
   07-sdk-python.md        # Python SDK
+  08-worker.md            # Generic worker
 ```
 
 ---

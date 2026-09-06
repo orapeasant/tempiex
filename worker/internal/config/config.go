@@ -1,12 +1,14 @@
-// Package config loads worker's YAML configuration (Tempiex connection
-// details, polled task queues, logging), mirroring the shape of pi's own
-// config but deliberately narrower: no API/session/metrics sections, since
-// those are AI-agent-harness concerns that live in pi, not in the generic
-// worker binary.
+// Package config loads the worker binary's YAML configuration: Tempiex
+// connection details, the task queues to poll, the HTTP inspection API, run
+// persistence, telemetry, and logging.
+//
+// This schema belongs to the binary, not to the worker library: embedders
+// construct worker.Config values directly and never see these types.
 package config
 
 import (
 	"os"
+	"strconv"
 
 	"github.com/goccy/go-yaml"
 )
@@ -14,6 +16,9 @@ import (
 type Config struct {
 	Tempiex TempiexConfig  `yaml:"tempiex"`
 	Workers []WorkerConfig `yaml:"workers"`
+	API     APIConfig      `yaml:"api"`
+	Runs    RunsConfig     `yaml:"runs"`
+	Metrics MetricsConfig  `yaml:"metrics"`
 	Log     LogConfig      `yaml:"log"`
 }
 
@@ -34,6 +39,27 @@ type WorkerConfig struct {
 	MaxConcurrentWorkflowTasks int    `yaml:"maxConcurrentWorkflowTasks"`
 }
 
+type APIConfig struct {
+	Enabled     bool     `yaml:"enabled"`
+	Host        string   `yaml:"host"`
+	Port        int      `yaml:"port"`
+	CORSOrigins []string `yaml:"corsOrigins"`
+}
+
+type RunsConfig struct {
+	StorePath        string `yaml:"storePath"`
+	MaxCompletedRuns int    `yaml:"maxCompletedRuns"`
+}
+
+type MetricsConfig struct {
+	OTel OTelConfig `yaml:"otel"`
+}
+
+type OTelConfig struct {
+	Endpoint string `yaml:"endpoint"`
+	Insecure bool   `yaml:"insecure"`
+}
+
 type LogConfig struct {
 	Level  string `yaml:"level"`
 	Format string `yaml:"format"`
@@ -51,6 +77,15 @@ func Default() *Config {
 				MaxConcurrentActivities:    10,
 				MaxConcurrentWorkflowTasks: 5,
 			},
+		},
+		API: APIConfig{
+			Enabled: true,
+			Host:    "0.0.0.0",
+			Port:    8090,
+		},
+		Runs: RunsConfig{
+			StorePath:        "./worker-runs.db",
+			MaxCompletedRuns: 1000,
 		},
 		Log: LogConfig{
 			Level:  "info",
@@ -82,6 +117,20 @@ func applyEnvOverrides(cfg *Config) {
 	}
 	if v := os.Getenv("WORKER_TEMPIEX_NAMESPACE"); v != "" {
 		cfg.Tempiex.Namespace = v
+	}
+	if v := os.Getenv("WORKER_API_HOST"); v != "" {
+		cfg.API.Host = v
+	}
+	if v := os.Getenv("WORKER_API_PORT"); v != "" {
+		if p, err := strconv.Atoi(v); err == nil {
+			cfg.API.Port = p
+		}
+	}
+	if v := os.Getenv("WORKER_RUNS_STORE_PATH"); v != "" {
+		cfg.Runs.StorePath = v
+	}
+	if v := os.Getenv("WORKER_OTEL_ENDPOINT"); v != "" {
+		cfg.Metrics.OTel.Endpoint = v
 	}
 	if v := os.Getenv("WORKER_LOG_LEVEL"); v != "" {
 		cfg.Log.Level = v

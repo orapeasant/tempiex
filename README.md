@@ -49,8 +49,8 @@ Tempiex is a durable workflow orchestration engine — a clean-room implementati
 | Web UI | `web/` | — (embedded in server) | React + TypeScript |
 | CLI | `cli/` | — | TypeScript + Ink |
 | Python SDK | `sdk-python/` | — | Python 3.10+ |
-| Generic worker | `worker/` | — | Go |
-| Pi agent harness | `pi/` | `8090` | Go |
+| Tempiex worker | `worker/` | `8090` | Go |
+| Pi agent harness | `pi/` | — | Go |
 
 ---
 
@@ -467,9 +467,15 @@ cli/                      # TypeScript + Ink v5 CLI
     components/           # Table, StatusBadge, Spinner, ErrorPanel
     hooks/                # Data-fetching hooks
 
-worker/                   # Go — generic Tempiex activity worker (task-queue polling/dispatch)
+worker/                   # Go — Tempiex activity worker
+  pool.go                 # ActivityHandler, Config, Pool (polling/dispatch core)
+  activity/               # typed activity registry + executor
+  run/                    # run tracking: event bus, SQLite store
+  api/                    # HTTP + SSE inspection API :8090
+  activities/             # built-in activities: shell, http, file_read, file_write
+  cmd/worker/             # worker binary
 
-pi/                       # Go — Pi AI agent harness (edge runner), depends on worker/
+pi/                       # Go — Pi agent harness (LLM agent runtime; no Tempiex deps)
 
 docs/spec/                # Design specifications
   01-tempiex.md           # Core engine
@@ -556,7 +562,7 @@ Or use the helper script:
 | `8133` | Tempiex core engine | gRPC |
 | `8080` | UI server + Web UI | HTTP |
 | `5432` | PostgreSQL | TCP |
-| `8090` | Pi agent HTTP API | HTTP |
+| `8090` | Worker inspection API | HTTP |
 
 ---
 

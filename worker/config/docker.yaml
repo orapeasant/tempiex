@@ -10,6 +10,22 @@ workers:
     maxConcurrentActivities: 10
     maxConcurrentWorkflowTasks: 5
 
+api:
+  enabled: true
+  host: "0.0.0.0"
+  port: 8090
+  corsOrigins:
+    - "http://localhost:8080"
+
+runs:
+  storePath: "/data/worker-runs.db"
+  maxCompletedRuns: 1000
+
+metrics:
+  otel:
+    endpoint: "otel-collector:4317"
+    insecure: true
+
 log:
   level: "info"
   format: "json"

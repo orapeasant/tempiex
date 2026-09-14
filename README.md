@@ -475,8 +475,6 @@ worker/                   # Go — Tempiex activity worker
   activities/             # built-in activities: shell, http, file_read, file_write
   cmd/worker/             # worker binary
 
-pi/                       # Go — Pi agent harness (LLM agent runtime; no Tempiex deps)
-
 docs/spec/                # Design specifications
   01-tempiex.md           # Core engine
   02-proxy.md             # gRPC proxy
